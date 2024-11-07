@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.androidproject.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_przychodyFragment"
+            app:destination="@id/przychodyFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_wydatkiFragment"
+            app:destination="@id/wydatkiFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_analizaFinansowFragment"
+            app:destination="@id/analizaFinansowFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/przychodyFragment"
+        android:name="com.example.androidproject.PrzychodyFragment"
+        android:label="fragment_przychody"
+        tools:layout="@layout/fragment_przychody" >
+        <action
+            android:id="@+id/action_przychodyFragment_to_historiaTransakcjiFragment"
+            app:destination="@id/historiaTransakcjiFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wydatkiFragment"
+        android:name="com.example.androidproject.WydatkiFragment"
+        android:label="fragment_wydatki"
+        tools:layout="@layout/fragment_wydatki" >
+        <action
+            android:id="@+id/action_wydatkiFragment_to_historiaTransakcjiFragment"
+            app:destination="@id/historiaTransakcjiFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historiaTransakcjiFragment"
+        android:name="com.example.androidproject.HistoriaTransakcjiFragment"
+        android:label="fragment_historia_transakcji"
+        tools:layout="@layout/fragment_historia_transakcji" >
+        <action
+            android:id="@+id/action_historiaTransakcjiFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/analizaFinansowFragment"
+        android:name="com.example.androidproject.AnalizaFinansowFragment"
+        android:label="fragment_analiza_finansow"
+        tools:layout="@layout/fragment_analiza_finansow" >
+    </fragment>
+</navigation>
