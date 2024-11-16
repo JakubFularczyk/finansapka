@@ -3,20 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WydatkiFragment">
+    tools:context=".ustawienia.HistoriaLimitowKategoriiFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="fragment wydatki" />
-
-    <Button
-        android:id="@+id/dodajWydatekButton2"
-        android:layout_width="138dp"
-        android:layout_height="124dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="75dp"
-        android:text="Dodaj wydatek" />
+        android:text="@string/hello_blank_fragment" />
 
 </RelativeLayout>

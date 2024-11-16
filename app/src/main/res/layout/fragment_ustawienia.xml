@@ -3,20 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PrzychodyFragment">
+    tools:context=".ustawienia.UstawieniaFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Fragment przychody" />
+
 
     <Button
-        android:id="@+id/dodajPrzychodButton2"
-        android:layout_width="138dp"
+        android:id="@+id/limitKategoriiButton"
+        android:layout_width="150dp"
         android:layout_height="124dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="75dp"
-        android:text="Dodaj Przychod" />
+        android:layout_marginTop="713dp"
+        android:text="LimityKategorii" />
 
 </RelativeLayout>

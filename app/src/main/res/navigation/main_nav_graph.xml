@@ -7,50 +7,75 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.androidproject.MainFragment"
+        android:name="com.example.androidproject.stronaglowna.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_przychodyFragment"
             app:destination="@id/przychodyFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_wydatkiFragment"
-            app:destination="@id/wydatkiFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_analizaFinansowFragment"
             app:destination="@id/analizaFinansowFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_ustawieniaFragment"
+            app:destination="@id/ustawieniaFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_limitKategoriiFragment"
+            app:destination="@id/limitKategoriiFragment" />
     </fragment>
     <fragment
         android:id="@+id/przychodyFragment"
-        android:name="com.example.androidproject.PrzychodyFragment"
+        android:name="com.example.androidproject.transakcje.DodajTransakcjeFragment"
         android:label="fragment_przychody"
-        tools:layout="@layout/fragment_przychody" >
+        tools:layout="@layout/fragment_dodaj_transakcje" >
         <action
             android:id="@+id/action_przychodyFragment_to_historiaTransakcjiFragment"
             app:destination="@id/historiaTransakcjiFragment" />
     </fragment>
     <fragment
-        android:id="@+id/wydatkiFragment"
-        android:name="com.example.androidproject.WydatkiFragment"
-        android:label="fragment_wydatki"
-        tools:layout="@layout/fragment_wydatki" >
-        <action
-            android:id="@+id/action_wydatkiFragment_to_historiaTransakcjiFragment"
-            app:destination="@id/historiaTransakcjiFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/historiaTransakcjiFragment"
-        android:name="com.example.androidproject.HistoriaTransakcjiFragment"
+        android:name="com.example.androidproject.transakcje.HistoriaTransakcjiFragment"
         android:label="fragment_historia_transakcji"
         tools:layout="@layout/fragment_historia_transakcji" >
         <action
             android:id="@+id/action_historiaTransakcjiFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_historiaTransakcjiFragment_to_edycjaTransakcjiFragment"
+            app:destination="@id/edycjaTransakcjiFragment" />
     </fragment>
     <fragment
         android:id="@+id/analizaFinansowFragment"
-        android:name="com.example.androidproject.AnalizaFinansowFragment"
+        android:name="com.example.androidproject.analiza.AnalizaFinansowFragment"
         android:label="fragment_analiza_finansow"
         tools:layout="@layout/fragment_analiza_finansow" >
     </fragment>
+    <fragment
+        android:id="@+id/edycjaTransakcjiFragment"
+        android:name="com.example.androidproject.transakcje.EdycjaTransakcjiFragment"
+        android:label="fragment_edycja_transakcji"
+        tools:layout="@layout/fragment_edycja_transakcji" />
+    <fragment
+        android:id="@+id/ustawieniaFragment"
+        android:name="com.example.androidproject.ustawienia.UstawieniaFragment"
+        android:label="fragment_ustawienia"
+        tools:layout="@layout/fragment_ustawienia" >
+        <action
+            android:id="@+id/action_ustawieniaFragment_to_limitKategoriiFragment"
+            app:destination="@id/limitKategoriiFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/limitKategoriiFragment"
+        android:name="com.example.androidproject.ustawienia.LimitKategoriiFragment"
+        android:label="fragment_limit_kategorii"
+        tools:layout="@layout/fragment_limit_kategorii" >
+        <action
+            android:id="@+id/action_limitKategoriiFragment_to_historiaLimitowKategoriiFragment"
+            app:destination="@id/historiaLimitowKategoriiFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historiaLimitowKategoriiFragment"
+        android:name="com.example.androidproject.ustawienia.HistoriaLimitowKategoriiFragment"
+        android:label="fragment_historia_limitow_kategorii"
+        tools:layout="@layout/fragment_historia_limitow_kategorii" />
 </navigation>

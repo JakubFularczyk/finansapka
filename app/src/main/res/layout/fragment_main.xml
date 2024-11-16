@@ -3,28 +3,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment">
+    tools:context=".stronaglowna.MainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        <!-- Powitanie -->
+        <TextView
+            android:id="@+id/welcomeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="Witaj, {Nazwa}"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/przychodyButton"
-        android:layout_width="138dp"
-        android:layout_height="124dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="75dp"
-        android:text="Przychody" />
+        <!-- Saldo -->
+        <TextView
+            android:id="@+id/balanceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/welcomeTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="-167,43 PLN"
+            android:textSize="24sp"
+            android:textColor="@android:color/holo_red_dark"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/wydatkiButton"
-        android:layout_width="191dp"
-        android:layout_height="140dp"
-        android:layout_below="@+id/przychodyButton"
-        android:layout_marginTop="123dp"
-        android:text="Wydatki" />
+        <!-- Lista transakcji -->
+        <ListView
+            android:id="@+id/transactionListView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/balanceTextView"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
 
+        <!-- Tekst gdy brak transakcji -->
+        <TextView
+            android:id="@+id/noTransactionsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/balanceTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Nie ma żadnych bieżących transakcji"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <!-- Przycisk Wyświetl wszystko -->
+        <Button
+            android:id="@+id/showAllButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/transactionListView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Wyświetl wszystko" />
+
+        <!-- Dolne przyciski -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:padding="0dp">
+
+                <!-- Analiza Finansowa -->
+                <Button
+                    android:id="@+id/analizaFinansowButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Analiza Finansów" />
+
+                <!-- Dodaj Transakcję -->
+                <Button
+                    android:id="@+id/dodajTransakcjeButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Dodaj Transakcję" />
+
+                <!-- Ustawienia -->
+                <Button
+                    android:id="@+id/ustawieniaButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Ustawienia" />
+        </LinearLayout>
 </RelativeLayout>

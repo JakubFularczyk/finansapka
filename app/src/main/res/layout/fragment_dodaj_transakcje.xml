@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".transakcje.DodajTransakcjeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Fragment przychody" />
+
+    <Button
+        android:id="@+id/dodajPrzychodButton2"
+        android:layout_width="138dp"
+        android:layout_height="124dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="787dp"
+        android:text="Dodaj Przychod" />
+
+    <EditText
+        android:id="@+id/kwotaInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/kwotaTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:ems="10"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/kwotaTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="104dp"
+        android:text="@string/kwota" />
+
+    <TextView
+        android:id="@+id/kategoriaTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/kwotaInput"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="false"
+        android:layout_marginTop="79dp"
+        android:text="@string/kategoria" />
+
+    <Spinner
+        android:id="@+id/kategoriaSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/kategoriaTextView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="146dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="147dp" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="wrap_content"
+        android:layout_height="303dp"
+        android:layout_below="@+id/kategoriaSpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="81dp" />
+
+</RelativeLayout>

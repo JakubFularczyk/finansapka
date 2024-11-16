@@ -2,4 +2,10 @@
     <string name="app_name">AndroidProject</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="kwota">Kwota</string>
+    <string name="kategoria">Kategoria</string>
+    <string name="data_przychodu">Data przychodu</string>
+    <string name="ustawienia">Ustawienia</string>
+    <string name="dodaj_transakcje">Dodaj Transakcje</string>
+    <string name="analiza_finansow">Analiza Finansów</string>
 </resources>

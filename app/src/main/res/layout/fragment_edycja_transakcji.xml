@@ -3,12 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".analiza.AnalizaFinansowFragment">
+    tools:context=".transakcje.EdycjaTransakcjiFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+
+
+    <Button
+        android:id="@+id/GotoweButton"
+        android:layout_width="150dp"
+        android:layout_height="124dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="193dp"
+        android:text="Gotowe" />
 
 </RelativeLayout>
