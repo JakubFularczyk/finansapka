@@ -31,12 +31,12 @@ public class MainFragment extends Fragment {
     private TextView balanceTextView;
     private ListView transactionListView;
     private TextView noTransactionsTextView;
-    private Button showAllButton;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
@@ -44,32 +44,24 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialize existing buttons
-        Button przychodyButton = view.findViewById(R.id.dodajTransakcjeButton);
-        przychodyButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.action_mainFragment_to_przychodyFragment);
-        });
 
-        Button ustawieniaButton = view.findViewById(R.id.ustawieniaButton);
-        ustawieniaButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.action_mainFragment_to_ustawieniaFragment);
-        });
+        przejdzDoDodaniaTransakcji(view, R.id.action_mainFragment_to_dodajTransakcjeFragment);
+        przejdzDoUstawien(view, R.id.action_mainFragment_to_ustawieniaFragment);
+        przejdzDoHistorii(view, R.id.action_mainFragment_to_historiaTransakcjiFragment);
+        przejdzDoAnalizy(view, R.id.action_mainFragment_to_analizaFinansowFragment);
 
 
-        // Initialize new UI components
+
         welcomeTextView = view.findViewById(R.id.welcomeTextView);
         balanceTextView = view.findViewById(R.id.balanceTextView);
         transactionListView = view.findViewById(R.id.transactionListView);
         noTransactionsTextView = view.findViewById(R.id.noTransactionsTextView);
-        showAllButton = view.findViewById(R.id.showAllButton);
 
-        // Set welcome message and balance
-        String username = "Jan"; // Replace with dynamic data if available
+
+        String username = "Jan";
         welcomeTextView.setText("Witaj, " + username);
 
-        double balance = -167.43; // Replace with dynamic data
+        double balance = 2222.43;
         balanceTextView.setText(String.format("%.2f PLN", balance));
         balanceTextView.setTextColor(balance < 0 ? getResources().getColor(android.R.color.holo_red_dark) : getResources().getColor(android.R.color.holo_green_dark));
 
@@ -84,11 +76,40 @@ public class MainFragment extends Fragment {
             // TODO: Populate the ListView with transactions (adapter logic to be added)
         }
 
-        // Set "Wyświetl wszystko" button listener
-        showAllButton.setOnClickListener(v -> {
-            // Logic to navigate to transaction history screen (to be implemented)
+
+    }
+
+    private void przejdzDoAnalizy(View view, int action_mainFragment_to_analizaFinansowFragment) {
+        Button analizaButton = view.findViewById(R.id.analizaButton);
+        analizaButton.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(action_mainFragment_to_analizaFinansowFragment);
         });
     }
+
+    private static void przejdzDoHistorii(@NonNull View view, int action_mainFragment_to_historiaTransakcjiFragment) {
+        Button wyswietlWszystkoButton = view.findViewById(R.id.wyswietlWszystkoButton);
+        wyswietlWszystkoButton.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(action_mainFragment_to_historiaTransakcjiFragment);
+        });
+    }
+    private static void przejdzDoDodaniaTransakcji(@NonNull View view, int action_mainFragment_to_przychodyFragment) {
+        Button dodajTransakcje = view.findViewById(R.id.dodajTransakcjeButton);
+        dodajTransakcje.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(action_mainFragment_to_przychodyFragment);
+        });
+    }
+    private static void przejdzDoUstawien(@NonNull View view, int action_mainFragment_to_ustawieniaFragment) {
+        Button ustawienia = view.findViewById(R.id.ustawieniaButton);
+        ustawienia.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(action_mainFragment_to_ustawieniaFragment);
+        });
+    }
+
+
 
     private List<String> getTransactions() {
         // Replace with actual logic to fetch transactions

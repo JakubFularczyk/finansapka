@@ -8,4 +8,25 @@
     <string name="ustawienia">Ustawienia</string>
     <string name="dodaj_transakcje">Dodaj Transakcje</string>
     <string name="analiza_finansow">Analiza Finansów</string>
+    <string name="analiza_finansowa">Analiza Finansowa</string>
+    <string name="saldo_aktualne">Saldo aktualne:</string>
+    <string name="wyswietl_wszystko">Wyświetl wszystko</string>
+    <string name="saldo">2222,43 PLN</string>
+    <string name="witaj_nazwa_uzytkownika">Witaj, {Nazwa}</string>
+    <string name="nie_ma_zadnych_biezacych_transakcji">Nie ma żadnych bieżących transakcji.</string>
+    <string name="ikona_przejscia_dalej">Ikona przejścia dalej</string>
+    <string name="powrot_do_menu">Powrót do menu</string>
+    <string name="dodaj">Dodaj</string>
+    <string name="edytuj_transakcje">Edytuj transakcję</string>
+    <string name="podaj_okres_rozliczeniowy_platnosci">Podaj okres rozliczeniowy płatności</string>
+    <string name="czy_platnosc_cykliczna">Czy płatność cykliczna?</string>
+    <string name="opcjonalny_opis">Opcjonalny opis</string>
+    <string name="opis">Opis</string>
+    <string name="wybierz_date">Wybierz datę</string>
+    <string name="ikona_wyboru_daty">Ikona wyboru daty</string>
+    <string name="data">Data</string>
+    <string name="wpisz_kwote">Wpisz kwotę</string>
+    <string name="dodaj_nowa_transakcje">Dodaj nową transakcję</string>
+    <string name="zmien">Zmień</string>
+
 </resources>

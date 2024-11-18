@@ -1,98 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".stronaglowna.MainFragment">
 
-        <!-- Powitanie -->
-        <TextView
-            android:id="@+id/welcomeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:text="Witaj, {Nazwa}"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+    <!-- Powitanie -->
+    <ImageView
+        android:id="@+id/topBackground"
+        android:layout_width="match_parent"
+        android:layout_above="@id/bottomWhiteBackground"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background" />
 
-        <!-- Saldo -->
-        <TextView
-            android:id="@+id/balanceTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/welcomeTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:text="-167,43 PLN"
-            android:textSize="24sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
+    <!-- Dolne białe tło -->
+
+    <View
+        android:id="@+id/bottomWhiteBackground"
+        android:layout_width="match_parent"
+        android:layout_height="310dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/rounded_corner_background_bottom" />
+
+    <TextView
+        android:id="@+id/welcomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:text="@string/witaj_nazwa_uzytkownika"
+        android:textSize="40sp"
+        android:textColor="#FFFFFF"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="3"
+        android:fontFamily="@font/googlesans_bold" />
+
+    <!-- Saldo -->
+    <TextView
+        android:id="@+id/balanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/biezaceSaldoView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:text="@string/saldo"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:shadowColor="#000000"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="4"
+        android:fontFamily="@font/googlesans_bold"/>
+
+    <!-- Kontener dla listy transakcji -->
+    <FrameLayout
+        android:id="@+id/transactionContainer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_above="@+id/bottomWhiteBackground"
+        android:layout_below="@id/balanceTextView"
+        android:layout_marginTop="120dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
+        android:background="@drawable/rounded_corner_background_transaction_list"
+        >
 
         <!-- Lista transakcji -->
+
+        <!-- Tekst gdy brak transakcji -->
         <ListView
             android:id="@+id/transactionListView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@id/balanceTextView"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" />
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="1dp"
+            android:scrollbars="none"
+            android:gravity="center" />
 
-        <!-- Tekst gdy brak transakcji -->
         <TextView
             android:id="@+id/noTransactionsTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/balanceTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="Nie ma żadnych bieżących transakcji"
-            android:textSize="16sp"
-            android:visibility="gone" />
-
-        <!-- Przycisk Wyświetl wszystko -->
-        <Button
-            android:id="@+id/showAllButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/transactionListView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="Wyświetl wszystko" />
-
-        <!-- Dolne przyciski -->
-        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/nie_ma_zadnych_biezacych_transakcji"
+            android:textColor="#FFFFFF"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:textStyle="bold"
+            android:shadowDy="2"
+            android:shadowRadius="3"
+            android:textSize="18sp"
+            android:visibility="gone"
+            android:fontFamily="@font/googlesans_bold"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/wyswietlWszystkoButtonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout"
+        android:layout_below="@id/transactionContainer"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="115dp"
+        android:background="@drawable/frame_with_border"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/wyswietlIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_show_history" />
+
+        <TextView
+            android:id="@+id/wyswietlText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            android:padding="0dp">
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/google_sans_regular"
+            android:gravity="center"
+            android:text="@string/wyswietl_wszystko"
+            android:textColor="#757575"
+            android:textSize="16sp" />
 
-                <!-- Analiza Finansowa -->
-                <Button
-                    android:id="@+id/analizaFinansowButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Analiza Finansów" />
+        <Button
+            android:id="@+id/wyswietlWszystkoButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true" />
+    </FrameLayout>
 
-                <!-- Dodaj Transakcję -->
-                <Button
-                    android:id="@+id/dodajTransakcjeButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Dodaj Transakcję" />
 
-                <!-- Ustawienia -->
-                <Button
-                    android:id="@+id/ustawieniaButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Ustawienia" />
-        </LinearLayout>
+    <LinearLayout
+        android:baselineAligned="false"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/frame_with_only_top_border"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/analizaIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_analysis" />
+
+            <TextView
+                android:id="@+id/analizaText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/google_sans_regular"
+                android:gravity="center"
+                android:text="@string/analiza_finansowa"
+                android:textColor="#757575"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/analizaButton"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="3sp">
+
+            <ImageView
+                android:id="@+id/dodajTransakcjeIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_add_transaction"
+                app:tint="#757575" />
+
+            <TextView
+                android:id="@+id/dodajTransakcjeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginTop="50sp"
+                android:fontFamily="@font/google_sans_regular"
+                android:gravity="center"
+                android:text="@string/dodaj_transakcje"
+                android:textColor="#757575"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/dodajTransakcjeButton"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/ustawieniaIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_settings"
+                app:tint="#757575" />
+
+            <TextView
+                android:id="@+id/ustawieniaText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/google_sans_regular"
+                android:gravity="center"
+                android:text="@string/ustawienia"
+                android:textColor="#757575"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/ustawieniaButton"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/biezaceSaldoView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/welcomeTextView"
+            android:layout_centerHorizontal="true"
+            android:text="@string/saldo_aktualne"
+            android:layout_marginTop="38dp"
+            android:textSize="22sp"
+            android:textColor="#FFFFFF"
+            android:shadowColor="#000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            />
+
+
 </RelativeLayout>

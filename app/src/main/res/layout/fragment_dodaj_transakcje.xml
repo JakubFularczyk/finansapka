@@ -1,73 +1,240 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".transakcje.DodajTransakcjeFragment">
+    android:padding="16dp"
+    android:background="@drawable/background_light">
 
-    <!-- TODO: Update blank fragment layout -->
+
+    <ImageButton
+        android:id="@+id/przejdzDoMenuButton"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_close"
+        android:contentDescription="@string/powrot_do_menu" />
+
 
     <TextView
+        android:id="@+id/headerText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Fragment przychody" />
+        android:layout_height="wrap_content"
+        android:text="@string/dodaj_nowa_transakcje"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/googlesans_bold"
 
-    <Button
-        android:id="@+id/dodajPrzychodButton2"
-        android:layout_width="138dp"
-        android:layout_height="124dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="787dp"
-        android:text="Dodaj Przychod" />
+        android:layout_marginTop="16dp" />
+
+
+    <TextView
+        android:id="@+id/currentBalanceText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerText"
+        android:text="@string/saldo"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+         />
+
+
+    <TextView
+        android:id="@+id/kwotaLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/currentBalanceText"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/google_sans_regular"
+        android:text="@string/kwota"
+        android:textSize="18sp"
+        android:textColor="@color/black" />
 
     <EditText
         android:id="@+id/kwotaInput"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/kwotaTextView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp"
-        android:ems="10"
+        android:layout_below="@id/kwotaLabel"
+        android:layout_marginTop="8dp"
+        android:padding="14dp"
+        android:hint="@string/wpisz_kwote"
         android:inputType="numberDecimal" />
 
-    <TextView
-        android:id="@+id/kwotaTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="104dp"
-        android:text="@string/kwota" />
 
     <TextView
-        android:id="@+id/kategoriaTextView"
-        android:layout_width="wrap_content"
+        android:id="@+id/kategoriaLabel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/kwotaInput"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="false"
-        android:layout_marginTop="79dp"
-        android:text="@string/kategoria" />
+        android:layout_below="@id/kwotaInput"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/google_sans_regular"
+        android:text="@string/kategoria"
+        android:textSize="18sp"
+        android:textColor="@color/black" />
 
     <Spinner
         android:id="@+id/kategoriaSpinner"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/kategoriaTextView"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="146dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="147dp" />
+        android:fontFamily="@font/google_sans_regular"
+        android:padding="10dp"
+        android:background="@drawable/frame_with_border"
+        android:layout_below="@id/kategoriaLabel"
+        android:layout_marginTop="15dp" />
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
-        android:layout_height="303dp"
-        android:layout_below="@+id/kategoriaSpinner"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="81dp" />
+
+    <TextView
+        android:id="@+id/dataLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/kategoriaSpinner"
+        android:fontFamily="@font/google_sans_regular"
+        android:layout_marginTop="16dp"
+        android:text="@string/data"
+        android:textSize="18sp"
+        android:textColor="@color/black" />
+
+
+    <FrameLayout
+        android:id="@+id/openDatePickerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dataLabel"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/frame_with_border"
+        android:padding="5dp">
+
+
+        <ImageView
+            android:id="@+id/datePickerIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_calendar"
+            android:contentDescription="@string/ikona_wyboru_daty" />
+
+
+        <TextView
+            android:id="@+id/datePickerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="48dp"
+            android:fontFamily="@font/google_sans_regular"
+            android:gravity="center"
+            android:text="@string/wybierz_date"
+            android:textColor="#757575"
+            android:textSize="18sp" />
+
+
+        <Button
+            android:id="@+id/openDatePickerButton"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true" />
+    </FrameLayout>
+
+
+
+    <TextView
+        android:id="@+id/opisLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/openDatePickerContainer"
+        android:layout_marginTop="16dp"
+        android:text="@string/opis"
+        android:fontFamily="@font/google_sans_regular"
+        android:textSize="18sp"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/opisInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/opisLabel"
+        android:layout_marginTop="8dp"
+        android:padding="16dp"
+        android:fontFamily="@font/google_sans_regular"
+        android:hint="@string/opcjonalny_opis" />
+
+
+    <CheckBox
+        android:id="@+id/cyclicPaymentCheckbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/opisInput"
+        android:layout_marginTop="16dp"
+        android:text="@string/czy_platnosc_cykliczna"
+        android:fontFamily="@font/google_sans_regular"
+        android:textSize="14sp"
+        android:textColor="@color/black" />
+
+
+    <Spinner
+        android:id="@+id/okresRozliczeniowySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cyclicPaymentCheckbox"
+        android:layout_marginTop="8dp"
+        android:hint="@string/podaj_okres_rozliczeniowy_platnosci"
+        android:visibility="gone" />
+
+
+
+
+    <FrameLayout
+        android:id="@+id/przejdzDalejContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cyclicPaymentCheckbox"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/frame_with_border"
+        android:padding="8dp">
+
+
+        <ImageView
+            android:id="@+id/wyswietlIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_add"
+            android:contentDescription="@string/ikona_przejscia_dalej" />
+
+
+        <TextView
+            android:id="@+id/wyswietlText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/google_sans_regular"
+            android:gravity="center"
+            android:text="@string/dodaj"
+            android:textColor="#757575"
+            android:textSize="18sp"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:padding="5dp" />
+
+
+        <Button
+            android:id="@+id/dodajTransakcjeButton2"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true" />
+    </FrameLayout>
+
+
 
 </RelativeLayout>
