@@ -7,7 +7,7 @@
     android:background="@drawable/background"
     tools:context=".stronaglowna.MainFragment">
 
-    <!-- Powitanie -->
+
     <ImageView
         android:id="@+id/topBackground"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/background" />
 
-    <!-- Dolne białe tło -->
+
 
     <View
         android:id="@+id/bottomWhiteBackground"
@@ -24,7 +24,37 @@
         android:layout_height="310dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
-        android:background="@drawable/rounded_corner_background_bottom" />
+        android:background="@drawable/background_light" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="6dp"
+        android:layout_marginTop="6dp">
+
+
+        <ImageButton
+            android:id="@+id/notificationButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_notifications"
+            android:contentDescription="Powiadomienia"
+            android:scaleType="fitCenter" />
+
+
+        <View
+            android:id="@+id/notificationBadge"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignTop="@id/notificationButton"
+            android:layout_alignEnd="@id/notificationButton"
+            android:background="@drawable/ic_notification_badge_background"
+            android:visibility="gone"
+            android:scaleType="fitCenter"/>
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/welcomeTextView"
@@ -37,12 +67,10 @@
         android:textSize="40sp"
         android:textColor="#FFFFFF"
         android:shadowColor="#000000"
-        android:shadowDx="2"
-        android:shadowDy="2"
         android:shadowRadius="3"
         android:fontFamily="@font/googlesans_bold" />
 
-    <!-- Saldo -->
+
     <TextView
         android:id="@+id/balanceTextView"
         android:layout_width="wrap_content"
@@ -59,7 +87,7 @@
         android:shadowRadius="4"
         android:fontFamily="@font/googlesans_bold"/>
 
-    <!-- Kontener dla listy transakcji -->
+
     <FrameLayout
         android:id="@+id/transactionContainer"
         android:layout_width="match_parent"
@@ -72,9 +100,9 @@
         android:background="@drawable/rounded_corner_background_transaction_list"
         >
 
-        <!-- Lista transakcji -->
 
-        <!-- Tekst gdy brak transakcji -->
+
+
         <ListView
             android:id="@+id/transactionListView"
             android:layout_width="match_parent"
@@ -166,7 +194,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_analysis" />
+                android:src="@drawable/ic_analysis"
+                app:tint="#757575" />
 
             <TextView
                 android:id="@+id/analizaText"
@@ -198,8 +227,8 @@
 
             <ImageView
                 android:id="@+id/dodajTransakcjeIcon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_add_transaction"
                 app:tint="#757575" />

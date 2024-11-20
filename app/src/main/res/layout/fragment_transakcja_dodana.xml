@@ -1,13 +1,150 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".transakcje.encje.transakcjaDodana">
+    android:padding="16dp"
+    android:background="@drawable/background_light">
+
 
     <TextView
+        android:id="@+id/transakcjaDodanaText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="148dp"
+        android:text="Transakcja dodana pomyślnie!"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:textColor="#707070"
+        android:gravity="center"
+        android:fontFamily="@font/googlesans_bold"/>
 
-</FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/przyciskiContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:background="@drawable/frame_with_only_top_border"
+        android:padding="8dp">
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/powrotDoMenuIkona"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_close"
+                android:contentDescription="Powrót do menu" />
+
+            <TextView
+                android:id="@+id/powrotDoMenuText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/google_sans_regular"
+                android:gravity="center"
+                android:text="Powrót do menu"
+                android:textColor="#757575"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/powrotDoMenuButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/dodajKolejnaTransakcjeIkona"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_add_transaction"
+                android:contentDescription="Dodaj kolejną transakcję" />
+
+            <TextView
+                android:id="@+id/dodajKolejnaTransakcjeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/google_sans_regular"
+                android:gravity="center"
+                android:text="Dodaj kolejną transakcję"
+                android:textColor="#757575"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/dodajKolejnaTransakcjeButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/przejdzDoHistoriiIkona"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_show_history"
+                android:contentDescription="Przejdź do historii" />
+
+            <TextView
+                android:id="@+id/przejdzDoHistoriiText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/google_sans_regular"
+                android:gravity="center"
+                android:text="Przejdź do historii"
+                android:textColor="#757575"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/przejdzDoHistoriiButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true" />
+        </FrameLayout>
+    </LinearLayout>
+</RelativeLayout>

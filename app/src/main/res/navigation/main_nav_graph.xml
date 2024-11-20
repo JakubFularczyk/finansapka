@@ -20,11 +20,11 @@
             android:id="@+id/action_mainFragment_to_ustawieniaFragment"
             app:destination="@id/ustawieniaFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_limitKategoriiFragment"
-            app:destination="@id/limitKategoriiFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_historiaTransakcjiFragment"
             app:destination="@id/historiaTransakcjiFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_historiaLimitowKategoriiFragment"
+            app:destination="@id/historiaLimitowKategoriiFragment" />
     </fragment>
     <fragment
         android:id="@+id/dodajTransakcjeFragment"
@@ -71,27 +71,30 @@
         android:name="com.example.androidproject.ustawienia.UstawieniaFragment"
         android:label="fragment_ustawienia"
         tools:layout="@layout/fragment_ustawienia" >
+
         <action
-            android:id="@+id/action_ustawieniaFragment_to_limitKategoriiFragment"
-            app:destination="@id/limitKategoriiFragment" />
+            android:id="@+id/action_ustawieniaFragment_to_historiaLimitowKategoriiFragment"
+            app:destination="@id/historiaLimitowKategoriiFragment" />
     </fragment>
     <fragment
         android:id="@+id/limitKategoriiFragment"
         android:name="com.example.androidproject.ustawienia.LimitKategoriiFragment"
         android:label="fragment_limit_kategorii"
         tools:layout="@layout/fragment_limit_kategorii" >
-        <action
-            android:id="@+id/action_limitKategoriiFragment_to_historiaLimitowKategoriiFragment"
-            app:destination="@id/historiaLimitowKategoriiFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/historiaLimitowKategoriiFragment"
         android:name="com.example.androidproject.ustawienia.HistoriaLimitowKategoriiFragment"
         android:label="fragment_historia_limitow_kategorii"
-        tools:layout="@layout/fragment_historia_limitow_kategorii" />
+        tools:layout="@layout/fragment_historia_limitow_kategorii" >
+        <action
+            android:id="@+id/action_historiaLimitowKategoriiFragment_to_limitKategoriiFragment"
+            app:destination="@id/limitKategoriiFragment" />
+    </fragment>
     <fragment
         android:id="@+id/transakcjaDodanaFragment"
-        android:name="com.example.androidproject.transakcje.encje.transakcjaDodana"
+        android:name="com.example.androidproject.transakcje.DodanaTransakcjaFragment"
         android:label="fragment_transakcja_dodana"
         tools:layout="@layout/fragment_transakcja_dodana" >
         <action
@@ -100,5 +103,8 @@
         <action
             android:id="@+id/action_transakcjaDodanaFragment_to_historiaTransakcjiFragment"
             app:destination="@id/historiaTransakcjiFragment" />
+        <action
+            android:id="@+id/action_transakcjaDodanaFragment_to_dodajTransakcjeFragment"
+            app:destination="@id/dodajTransakcjeFragment" />
     </fragment>
 </navigation>

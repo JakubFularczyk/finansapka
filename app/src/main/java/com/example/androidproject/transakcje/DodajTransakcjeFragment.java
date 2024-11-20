@@ -42,7 +42,7 @@ public class DodajTransakcjeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        MainActivity mainActivity = (MainActivity) requireActivity();
         powrocDoMenu(view, R.id.action_dodajTransakcjeFragment_to_mainFragment);
 
 
@@ -65,10 +65,8 @@ public class DodajTransakcjeFragment extends Fragment {
         });
 
         Spinner spinner = view.findViewById(R.id.kategoriaSpinner);
-        List<String> categories = List.of("Dom", "Samochód", "Jedzenie");
-        ArrayAdapter<String> kategoriaAdapter = new ArrayAdapter<>(this.getContext(),
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                categories);
+        List<String> categories = mainActivity.getCategories();
+        ArrayAdapter<String> kategoriaAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, categories);
         spinner.setAdapter(kategoriaAdapter);
         EditText kwotaInput = view.findViewById(R.id.kwotaInput);
         Button openDatePickerButton = view.findViewById(R.id.openDatePickerButton);
@@ -76,11 +74,21 @@ public class DodajTransakcjeFragment extends Fragment {
                 .setTitleText("Wybierz datę")
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                 .build();
-        openDatePickerButton.setOnClickListener(v -> datePicker.show(getParentFragmentManager(), "DATE_PICKER"));
+        openDatePickerButton.setOnClickListener(v -> {
+            try {
+                datePicker.show(requireActivity().getSupportFragmentManager(), "DATE_PICKER");
+            } catch (Exception e) {
+                Log.e("DodajTransakcjeFragment", "Błąd przy otwieraniu DatePicker: " + e.getMessage());
+            }
+        });
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            localCalendar.setTimeInMillis(selection);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            openDatePickerButton.setText(sdf.format(localCalendar.getTime()));
+            if (selection != null) {
+                localCalendar.setTimeInMillis(selection);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                openDatePickerButton.setText(sdf.format(localCalendar.getTime()));
+            } else {
+                Log.e("DodajTransakcjeFragment", "Nie udało się pobrać daty z DatePicker.");
+            }
         });
 
         Button navigateToHistoryButton = view.findViewById(R.id.dodajTransakcjeButton2);

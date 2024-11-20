@@ -1,19 +1,83 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ustawienia.UstawieniaFragment">
+    android:padding="16dp"
+    android:forceDarkAllowed="false"
+    android:background="@drawable/background_light">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Limity kategorii -->
+    <FrameLayout
+        android:id="@+id/limityKategoriiContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp">
 
+        <Button
+            android:id="@+id/limityKategoriiButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_transparent_with_border"
+            android:text="Limity Kategorii"
+            android:textColor="#757575"
+            android:padding="16dp"
+            android:textSize="16sp" />
+    </FrameLayout>
 
-    <Button
-        android:id="@+id/limitKategoriiButton"
-        android:layout_width="150dp"
-        android:layout_height="124dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="713dp"
-        android:text="LimityKategorii" />
+    <!-- Zmiana motywu -->
+    <FrameLayout
+        android:id="@+id/zmianaMotywuContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/limityKategoriiContainer"
+        android:layout_marginTop="64dp">
+
+        <Button
+            android:id="@+id/zmianaMotywuButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_transparent_with_border"
+            android:text="Zmiana Motywu"
+            android:textColor="#757575"
+            android:padding="16dp"
+            android:textSize="16sp" />
+    </FrameLayout>
+
+    <!-- Zmiana kodu PIN -->
+    <FrameLayout
+        android:id="@+id/zmianaKoduPinContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/zmianaMotywuContainer"
+        android:layout_marginTop="64dp">
+
+        <Button
+            android:id="@+id/zmianaKoduPinButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_transparent_with_border"
+            android:text="Zmiana Kodu PIN"
+            android:textColor="#757575"
+            android:padding="16dp"
+            android:textSize="16sp" />
+    </FrameLayout>
+
+    <!-- Usuń konto -->
+    <FrameLayout
+        android:id="@+id/usunKontoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/zmianaKoduPinContainer"
+        android:layout_marginTop="250dp">
+
+        <Button
+            android:id="@+id/usunKontoButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_transparent_with_border"
+            android:text="Usuń Konto"
+            android:textColor="#757575"
+            android:padding="16dp"
+            android:textSize="16sp" />
+    </FrameLayout>
 
 </RelativeLayout>
