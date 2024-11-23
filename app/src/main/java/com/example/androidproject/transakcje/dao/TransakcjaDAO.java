@@ -12,8 +12,11 @@ import java.util.List;
 public interface TransakcjaDAO {
 
     @Insert
-    void insertAll(TransakcjaEntity transakcja);
+    void insert(TransakcjaEntity transakcja);
 
     @Query("SELECT * FROM TransakcjaEntity")
     List<TransakcjaEntity> getAll();
+
+    @Query("SELECT * FROM TransakcjaEntity ORDER BY data DESC LIMIT 3")
+    List<TransakcjaEntity> getLatest3();
 }

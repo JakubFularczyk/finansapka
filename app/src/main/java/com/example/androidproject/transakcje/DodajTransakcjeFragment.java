@@ -106,7 +106,7 @@ public class DodajTransakcjeFragment extends Fragment {
                     spinner.getSelectedItem().toString(),
                     localCalendar.getTime()
             );
-            transakcjaDAO.insertAll(encja);
+            transakcjaDAO.insert(encja);
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.action_dodajTransakcjeFragment_to_transakcjaDodanaFragment);
         });

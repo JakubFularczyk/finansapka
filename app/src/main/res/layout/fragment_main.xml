@@ -40,7 +40,7 @@
             android:layout_height="40dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_notifications"
-            android:contentDescription="Powiadomienia"
+            android:contentDescription="@string/powiadomienia"
             android:scaleType="fitCenter" />
 
 
@@ -54,6 +54,7 @@
             android:visibility="gone"
             android:scaleType="fitCenter"/>
     </RelativeLayout>
+
 
 
     <TextView
@@ -99,10 +100,6 @@
         android:layout_marginEnd="13dp"
         android:background="@drawable/rounded_corner_background_transaction_list"
         >
-
-
-
-
         <ListView
             android:id="@+id/transactionListView"
             android:layout_width="match_parent"
@@ -118,7 +115,6 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/nie_ma_zadnych_biezacych_transakcji"
-            android:textColor="#FFFFFF"
             android:shadowColor="#000000"
             android:shadowDx="2"
             android:textStyle="bold"

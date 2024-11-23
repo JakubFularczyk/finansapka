@@ -20,4 +20,43 @@
         android:layout_marginTop="75dp"
         android:text="Gotowe" />
 
+    <FrameLayout
+        android:id="@+id/transactionContainer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
+        android:background="@drawable/rounded_corner_background_transaction_list"
+        >
+
+
+
+
+        <ListView
+            android:id="@+id/transactionListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="1dp"
+            android:scrollbars="none"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/noTransactionsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/nie_ma_zadnych_biezacych_transakcji"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:textStyle="bold"
+            android:shadowDy="2"
+            android:shadowRadius="3"
+            android:textSize="18sp"
+            android:visibility="gone"
+            android:fontFamily="@font/googlesans_bold"/>
+    </FrameLayout>
+
+
 </RelativeLayout>
