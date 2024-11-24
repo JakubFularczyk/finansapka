@@ -1,6 +1,5 @@
 package com.example.androidproject.stronaglowna;
 
-import android.database.DataSetObserver;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,23 +11,20 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidproject.R;
 import com.example.androidproject.baza.BazaDanych;
+import com.example.androidproject.adaptery.TransakcjeEkranGlownyAdapter;
 import com.example.androidproject.transakcje.dao.TransakcjaDAO;
 import com.example.androidproject.transakcje.encje.TransakcjaEntity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class MainFragment extends Fragment {
@@ -141,30 +137,24 @@ public class MainFragment extends Fragment {
 
     private void zaladujDaneHistoryczne(@NonNull View view) {
         ListView transactionListView = view.findViewById(R.id.transactionListView);
+        TextView noTransactionsTextView = view.findViewById(R.id.noTransactionsTextView);
+
 
         MainActivity mainActivity = (MainActivity) getActivity();
         BazaDanych db = mainActivity.getDb();
         TransakcjaDAO transakcjaDAO = db.transakcjaDAO();
         List<TransakcjaEntity> najnowszeTransakcje = transakcjaDAO.getLatest3();
-        List<String> wpisyHistoryczne = najnowszeTransakcje.stream()
-                .map(t -> t.getData() + " " + t.getOpis() + " " + t.getKwota())
-                .collect(Collectors.toList());
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, wpisyHistoryczne);
-        transactionListView.setAdapter(adapter);
-
-        pokazWpisyHistoryczne(view, !wpisyHistoryczne.isEmpty());
-    }
-
-    private void pokazWpisyHistoryczne(View view, boolean widoczne) {
-        transactionListView = view.findViewById(R.id.transactionListView);
-        noTransactionsTextView = view.findViewById(R.id.noTransactionsTextView);
-
-        if (widoczne) {
-            noTransactionsTextView.setVisibility(View.GONE);
-            transactionListView.setVisibility(View.VISIBLE);
-        } else {
+        if (najnowszeTransakcje.isEmpty()) {
             noTransactionsTextView.setVisibility(View.VISIBLE);
             transactionListView.setVisibility(View.GONE);
+        } else {
+            noTransactionsTextView.setVisibility(View.GONE);
+            transactionListView.setVisibility(View.VISIBLE);
+
+            TransakcjeEkranGlownyAdapter adapter = new TransakcjeEkranGlownyAdapter(requireContext(), najnowszeTransakcje);
+            transactionListView.setAdapter(adapter);
         }
+
     }
+
 }

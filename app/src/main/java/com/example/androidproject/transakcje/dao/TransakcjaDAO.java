@@ -3,6 +3,7 @@ package com.example.androidproject.transakcje.dao;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.androidproject.transakcje.encje.TransakcjaEntity;
 
@@ -19,4 +20,11 @@ public interface TransakcjaDAO {
 
     @Query("SELECT * FROM TransakcjaEntity ORDER BY data DESC LIMIT 3")
     List<TransakcjaEntity> getLatest3();
+
+    @Update
+    void update(TransakcjaEntity transakcja);
+
+
+    @Query("SELECT * FROM TransakcjaEntity ORDER BY data DESC")
+    List<TransakcjaEntity> getAllSortedByDate();
 }

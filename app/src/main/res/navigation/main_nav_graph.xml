@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_historiaTransakcjiFragment_to_edycjaTransakcjiFragment"
             app:destination="@id/edycjaTransakcjiFragment" />
+        <action
+            android:id="@+id/action_historiaTransakcjiFragment_to_dodajTransakcjeFragment"
+            app:destination="@id/dodajTransakcjeFragment" />
     </fragment>
     <fragment
         android:id="@+id/analizaFinansowFragment"
