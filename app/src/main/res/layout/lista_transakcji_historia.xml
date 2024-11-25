@@ -11,7 +11,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="4dp"
         android:text="Data"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -20,7 +20,10 @@
         android:layout_below="@id/transactionDateText"
         android:orientation="vertical"
         android:background="@drawable/rounded_corner_background_transaction_list"
-        android:padding="8dp">
+        android:paddingTop="16dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom ="16dp">
 
         <TextView
             android:id="@+id/transactionAmountText"

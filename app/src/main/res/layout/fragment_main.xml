@@ -134,7 +134,7 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="115dp"
+        android:layout_marginBottom="110dp"
         android:background="@drawable/frame_with_border"
         android:padding="8dp">
 
@@ -173,7 +173,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/frame_with_only_top_border"
         android:orientation="horizontal"
         android:weightSum="3">
@@ -203,7 +203,7 @@
                 android:gravity="center"
                 android:text="@string/analiza_finansowa"
                 android:textColor="#757575"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/analizaButton"
@@ -234,12 +234,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginTop="50sp"
+                android:layout_marginTop="50dp"
                 android:fontFamily="@font/google_sans_regular"
                 android:gravity="center"
                 android:text="@string/dodaj_transakcje"
                 android:textColor="#757575"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/dodajTransakcjeButton"
@@ -259,8 +259,8 @@
 
             <ImageView
                 android:id="@+id/ustawieniaIcon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_settings"
                 app:tint="#757575" />
@@ -275,7 +275,7 @@
                 android:gravity="center"
                 android:text="@string/ustawienia"
                 android:textColor="#757575"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/ustawieniaButton"

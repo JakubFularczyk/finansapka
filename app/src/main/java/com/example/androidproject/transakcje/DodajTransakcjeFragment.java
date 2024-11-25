@@ -19,12 +19,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.androidproject.R;
 import com.example.androidproject.baza.BazaDanych;
+import com.example.androidproject.customviews.CustomSwitch;
 import com.example.androidproject.stronaglowna.MainActivity;
 import com.example.androidproject.transakcje.dao.TransakcjaDAO;
 import com.example.androidproject.transakcje.encje.TransakcjaEntity;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -37,7 +40,6 @@ public class DodajTransakcjeFragment extends Fragment {
     private Calendar localCalendar = Calendar.getInstance();
     private EditText kwotaInput, opisInput;
     private Spinner kategoriaSpinner, okresRozliczeniowySpinner;
-    private Button openDatePickerButton;
     private TextView datePickerText;
 
     @Override
@@ -50,24 +52,30 @@ public class DodajTransakcjeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Inicjalizacja widoków
         MainActivity mainActivity = (MainActivity) requireActivity();
         powrocDoMenu(view, R.id.action_dodajTransakcjeFragment_to_mainFragment);
 
         kwotaInput = view.findViewById(R.id.kwotaInput);
         opisInput = view.findViewById(R.id.opisInput);
         kategoriaSpinner = view.findViewById(R.id.kategoriaSpinner);
-        datePickerText  = view.findViewById(R.id.datePickerText);
-        openDatePickerButton = view.findViewById(R.id.openDatePickerButton);
+        datePickerText = view.findViewById(R.id.datePickerText);
+        CustomSwitch transactionTypeCustomSwitch = view.findViewById(R.id.transactionTypeCustomSwitch);
+
+        final boolean[] isIncome = {true};
+        transactionTypeCustomSwitch.setChecked(true);
 
 
-        // Spinner dla kategorii
+        transactionTypeCustomSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            isIncome[0] = isChecked;
+        });
+
+
         List<String> categories = mainActivity.getCategories();
         ArrayAdapter<String> kategoriaAdapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_spinner_dropdown_item, categories);
         kategoriaSpinner.setAdapter(kategoriaAdapter);
 
-        // Spinner dla okresu rozliczeniowego
+
         CheckBox cyclicPaymentCheckbox = view.findViewById(R.id.cyclicPaymentCheckbox);
         okresRozliczeniowySpinner = view.findViewById(R.id.okresRozliczeniowySpinner);
         ArrayAdapter<String> okresAdapter = new ArrayAdapter<>(
@@ -85,31 +93,41 @@ public class DodajTransakcjeFragment extends Fragment {
             }
         });
 
-        // Obsługa wyboru daty
+
         Button openDatePickerButton = view.findViewById(R.id.openDatePickerButton);
         openDatePickerButton.setOnClickListener(v -> openDatePicker());
-
 
         if (localCalendar != null) {
             datePickerText.setText(formatDate(localCalendar.getTime()));
         }
 
-        // Dodanie transakcji do bazy danych
+
         Button dodajTransakcjeButton = view.findViewById(R.id.dodajTransakcjeButton2);
         dodajTransakcjeButton.setOnClickListener(v -> {
-            Log.d(getTag(), "Dodawanie transakcji...");
             TransakcjaDAO transakcjaDAO = getTransakcjaDao();
-            TransakcjaEntity encja = przygotujEncje(
-                    kwotaInput.getText().toString(),
-                    kategoriaSpinner.getSelectedItem().toString(),
-                    opisInput.getText().toString(),
-                    localCalendar.getTime()
-            );
+            String kwotaTekst = kwotaInput.getText().toString().trim();
+            if (kwotaTekst.isEmpty()) {
+                Toast.makeText(requireContext(), "Proszę podać kwotę", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            try {
+                double kwota = Double.parseDouble(kwotaTekst);
+                if (!isIncome[0]) {
+                    kwota = -kwota;
+                }
+                TransakcjaEntity encja = przygotujEncje(
+                        String.valueOf(kwota),
+                        kategoriaSpinner.getSelectedItem().toString(),
+                        opisInput.getText().toString(),
+                        localCalendar.getTime()
+                );
+                transakcjaDAO.insert(encja);
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.action_dodajTransakcjeFragment_to_transakcjaDodanaFragment);
 
-            transakcjaDAO.insert(encja);
-
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.action_dodajTransakcjeFragment_to_transakcjaDodanaFragment);
+            } catch (NumberFormatException e) {
+                Toast.makeText(requireContext(), "Nieprawidłowy format kwoty", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -142,7 +160,7 @@ public class DodajTransakcjeFragment extends Fragment {
 
     private TransakcjaEntity przygotujEncje(String kwota, String kategoria, String opis, Date data) {
         TransakcjaEntity transakcjaEntity = new TransakcjaEntity();
-        transakcjaEntity.setKwota(kwota);
+        transakcjaEntity.setKwota(kwota); // Ustawiamy kwotę jako String
         transakcjaEntity.setKategoria(kategoria);
         transakcjaEntity.setOpis(opis);
         transakcjaEntity.setData(data);

@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     android:background="@drawable/background_light">
 
@@ -25,28 +26,57 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:fontFamily="@font/googlesans_bold"
-
         android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="4dp" />
 
 
-    <TextView
-        android:id="@+id/currentBalanceText"
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/headerText"
-        android:text="@string/saldo"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        />
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/switchLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Typ transakcji:"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.example.androidproject.customviews.CustomSwitch
+                android:id="@+id/transactionTypeCustomSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:minHeight="40dp"
+                android:textOff="Wydatek"
+                android:textOn="Przychód"
+                android:fontFamily="@font/google_sans_regular"
+                app:switchMinWidth="150dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 
     <TextView
         android:id="@+id/kwotaLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/currentBalanceText"
-        android:layout_marginTop="10dp"
+        android:layout_below="@id/headerText"
+        android:layout_marginTop="75dp"
         android:fontFamily="@font/google_sans_regular"
         android:text="@string/kwota"
         android:textSize="18sp"
@@ -195,7 +225,7 @@
         android:layout_below="@id/cyclicPaymentCheckbox"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="65dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/frame_with_border"
         android:padding="8dp">

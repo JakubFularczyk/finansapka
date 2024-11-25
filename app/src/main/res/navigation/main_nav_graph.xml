@@ -94,6 +94,9 @@
         <action
             android:id="@+id/action_historiaLimitowKategoriiFragment_to_limitKategoriiFragment"
             app:destination="@id/limitKategoriiFragment" />
+        <action
+            android:id="@+id/action_historiaLimitowKategoriiFragment_to_ustawieniaFragment"
+            app:destination="@id/ustawieniaFragment" />
     </fragment>
     <fragment
         android:id="@+id/transakcjaDodanaFragment"

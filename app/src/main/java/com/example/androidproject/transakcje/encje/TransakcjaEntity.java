@@ -24,6 +24,7 @@ public class TransakcjaEntity {
 
     public String opis;
 
+
     public int getUid() {
         return uid;
     }
@@ -63,4 +64,5 @@ public class TransakcjaEntity {
     public void setOpis(String opis) {
         this.opis = opis;
     }
+
 }

@@ -15,6 +15,7 @@ public interface TransakcjaDAO {
     @Insert
     void insert(TransakcjaEntity transakcja);
 
+
     @Query("SELECT * FROM TransakcjaEntity")
     List<TransakcjaEntity> getAll();
 
@@ -27,4 +28,8 @@ public interface TransakcjaDAO {
 
     @Query("SELECT * FROM TransakcjaEntity ORDER BY data DESC")
     List<TransakcjaEntity> getAllSortedByDate();
+
+
+
+
 }

@@ -2,88 +2,206 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:forceDarkAllowed="false"
     android:background="@drawable/background_light">
 
-    <!-- Limity kategorii -->
+
+    <TextView
+        android:id="@+id/ustawieniaText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/googlesans_bold"
+        android:text="@string/ustawienia"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+
     <FrameLayout
         android:id="@+id/limityKategoriiContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp">
+        android:layout_below="@id/ustawieniaText"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/frame_with_border"
+        android:padding="8dp">
+
+
+        <ImageView
+            android:id="@+id/wyswietlIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_limits"
+            android:contentDescription="@string/ikona_przejscia_dalej" />
+
+
+        <TextView
+            android:id="@+id/wyswietlText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/google_sans_regular"
+            android:gravity="center"
+            android:text="@string/limity_kategorii"
+            android:textColor="#757575"
+            android:textSize="18sp"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:padding="5dp" />
+
 
         <Button
             android:id="@+id/limityKategoriiButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_transparent_with_border"
-            android:text="Limity Kategorii"
-            android:textColor="#757575"
-            android:padding="16dp"
-            android:textSize="16sp" />
+            android:layout_height="75dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true" />
     </FrameLayout>
 
-    <!-- Zmiana motywu -->
+
+
+
+
+
+
     <FrameLayout
         android:id="@+id/zmianaMotywuContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/limityKategoriiContainer"
-        android:layout_marginTop="64dp">
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/frame_with_border"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/zmianaMotywuIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_theme"
+            android:contentDescription="@string/ikona_zmiany_motywu" />
+
+        <TextView
+            android:id="@+id/zmianaMotywuText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/google_sans_regular"
+            android:gravity="center"
+            android:text="@string/zmiana_motywu"
+            android:textColor="#757575"
+            android:textSize="18sp"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:padding="5dp" />
 
         <Button
             android:id="@+id/zmianaMotywuButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_transparent_with_border"
-            android:text="Zmiana Motywu"
-            android:textColor="#757575"
-            android:padding="16dp"
-            android:textSize="16sp" />
+            android:layout_height="75dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true" />
     </FrameLayout>
 
-    <!-- Zmiana kodu PIN -->
+    <!-- Zmiana Kodu PIN -->
     <FrameLayout
         android:id="@+id/zmianaKoduPinContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/zmianaMotywuContainer"
-        android:layout_marginTop="64dp">
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/frame_with_border"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/zmianaKoduPinIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_pin"
+            android:contentDescription="@string/ikona_zmiany_kodu_pin" />
+
+        <TextView
+            android:id="@+id/zmianaKoduPinText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/google_sans_regular"
+            android:gravity="center"
+            android:text="@string/zmiana_kodu_pin"
+            android:textColor="#757575"
+            android:textSize="18sp"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:padding="5dp" />
 
         <Button
             android:id="@+id/zmianaKoduPinButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_transparent_with_border"
-            android:text="Zmiana Kodu PIN"
-            android:textColor="#757575"
-            android:padding="16dp"
-            android:textSize="16sp" />
+            android:layout_height="75dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true" />
     </FrameLayout>
 
-    <!-- Usuń konto -->
+    <!-- Usuń Konto -->
     <FrameLayout
         android:id="@+id/usunKontoContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/zmianaKoduPinContainer"
-        android:layout_marginTop="250dp">
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/frame_with_border"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/usunKontoIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="@string/ikona_usuniecia_konta" />
+
+        <TextView
+            android:id="@+id/usunKontoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/google_sans_regular"
+            android:gravity="center"
+            android:text="@string/usu_konto"
+            android:textColor="#757575"
+            android:textSize="18sp"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:padding="5dp" />
 
         <Button
             android:id="@+id/usunKontoButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_transparent_with_border"
-            android:text="Usuń Konto"
-            android:textColor="#757575"
-            android:padding="16dp"
-            android:textSize="16sp" />
+            android:layout_height="75dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true" />
     </FrameLayout>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
 </RelativeLayout>

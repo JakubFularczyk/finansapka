@@ -29,5 +29,16 @@
     <string name="dodaj_nowa_transakcje">Dodaj nową transakcję</string>
     <string name="zmien">Zmień</string>
     <string name="powiadomienia">Powiadomienia</string>
+    <string name="limity_kategorii">Limity Kategorii</string>
+    <string name="zmiana_kodu_pin">Zmiana Kodu PIN</string>
+    <string name="ikona_zmiany_kodu_pin">Ikona zmiany kodu PIN</string>
+    <string name="usu_konto">Usuń Konto</string>
+    <string name="ikona_usuniecia_konta">Ikona usunięcia konta</string>
+    <string name="zmiana_motywu">Zmiana Motywu</string>
+    <string name="ikona_zmiany_motywu">Ikona zmiany motywu</string>
+    <string name="transakcje">Transakcje</string>
+    <string name="historia_limitow_kategorii">Historia Limitów Kategorii</string>
+    <string name="powrot_do_ustawien">Powrót do ustawień</string>
+    <string name="dodaj_nowa_kategorie">Dodaj nową kategorie</string>
 
 </resources>

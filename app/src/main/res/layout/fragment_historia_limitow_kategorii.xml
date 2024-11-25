@@ -1,16 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ustawienia.HistoriaLimitowKategoriiFragment">
+    android:background="@drawable/background_light">
 
 
-
-    <Button
-        android:id="@+id/limityKategoriiButton"
+    <TextView
+        android:id="@+id/headerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="przejdzDoLimituKategorii" />
+        android:text="@string/historia_limitow_kategorii"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp" />
 
+
+    <ListView
+        android:id="@+id/limitCategoryListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerText"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="32dp"
+        android:paddingStart="32dp"
+        android:paddingBottom="16dp" />
+
+    <LinearLayout
+        android:id="@+id/przyciskiContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:baselineAligned="false"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:background="@drawable/frame_with_only_top_border"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:id="@+id/powrotDoUstawienIkona"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_close"
+                android:contentDescription="@string/powrot_do_ustawien" />
+
+            <TextView
+                android:id="@+id/powrotDoMenuText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/google_sans_regular"
+                android:gravity="center"
+                android:text="@string/powrot_do_ustawien"
+                android:textColor="#757575"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/powrotButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:id="@+id/dodajNowaKategorie"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_add_transaction"
+                android:contentDescription="@string/dodaj_nowa_kategorie" />
+
+            <TextView
+                android:id="@+id/dodajKolejnaTransakcjeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/google_sans_regular"
+                android:gravity="center"
+                android:text="@string/dodaj_nowa_kategorie"
+                android:textColor="#757575"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/limityKategoriiButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true" />
+        </FrameLayout>
+    </LinearLayout>
 </RelativeLayout>
