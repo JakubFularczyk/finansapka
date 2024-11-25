@@ -80,20 +80,10 @@
             app:destination="@id/historiaLimitowKategoriiFragment" />
     </fragment>
     <fragment
-        android:id="@+id/limitKategoriiFragment"
-        android:name="com.example.androidproject.ustawienia.LimitKategoriiFragment"
-        android:label="fragment_limit_kategorii"
-        tools:layout="@layout/fragment_limit_kategorii" >
-
-    </fragment>
-    <fragment
         android:id="@+id/historiaLimitowKategoriiFragment"
         android:name="com.example.androidproject.ustawienia.HistoriaLimitowKategoriiFragment"
         android:label="fragment_historia_limitow_kategorii"
         tools:layout="@layout/fragment_historia_limitow_kategorii" >
-        <action
-            android:id="@+id/action_historiaLimitowKategoriiFragment_to_limitKategoriiFragment"
-            app:destination="@id/limitKategoriiFragment" />
         <action
             android:id="@+id/action_historiaLimitowKategoriiFragment_to_ustawieniaFragment"
             app:destination="@id/ustawieniaFragment" />

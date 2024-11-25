@@ -68,11 +68,35 @@ public class HistoriaLimitowKategoriiFragment extends Fragment {
         });
 
         Button limityKategoriiButton = view.findViewById(R.id.limityKategoriiButton);
-        limityKategoriiButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.action_historiaLimitowKategoriiFragment_to_limitKategoriiFragment);
-        });
+        limityKategoriiButton.setOnClickListener(v -> showAddCategoryPopup(mainActivity));
     }
+
+    private void showAddCategoryPopup(MainActivity mainActivity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Dodaj nową kategorię");
+
+        View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_dodaj_kategorie, null);
+        builder.setView(dialogView);
+
+        EditText categoryInput = dialogView.findViewById(R.id.kategoriaInput);
+
+        builder.setPositiveButton("Dodaj", (dialog, which) -> {
+            String newCategory = categoryInput.getText().toString().trim();
+
+            if (!newCategory.isEmpty()) {
+                mainActivity.addCategory(newCategory);
+                adapter.notifyDataSetChanged();
+
+                Toast.makeText(requireContext(), "Dodano kategorię: " + newCategory, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "Kategoria nie może być pusta!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Anuluj", (dialog, which) -> dialog.dismiss());
+        builder.create().show();
+    }
+
 
     private void showSetLimitPopup(String category) {
 

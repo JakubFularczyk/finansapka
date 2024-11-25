@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -60,6 +61,7 @@ public class DodajTransakcjeFragment extends Fragment {
         kategoriaSpinner = view.findViewById(R.id.kategoriaSpinner);
         datePickerText = view.findViewById(R.id.datePickerText);
         CustomSwitch transactionTypeCustomSwitch = view.findViewById(R.id.transactionTypeCustomSwitch);
+        CheckBox cyclicPaymentCheckbox = view.findViewById(R.id.cyclicPaymentCheckbox);
 
         final boolean[] isIncome = {true};
         transactionTypeCustomSwitch.setChecked(true);
@@ -76,7 +78,31 @@ public class DodajTransakcjeFragment extends Fragment {
         kategoriaSpinner.setAdapter(kategoriaAdapter);
 
 
-        CheckBox cyclicPaymentCheckbox = view.findViewById(R.id.cyclicPaymentCheckbox);
+        cyclicPaymentCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            View openDatePickerButton = view.findViewById(R.id.openDatePickerButton);
+            FrameLayout openDatePickerContainer = view.findViewById(R.id.openDatePickerContainer);
+
+            if (isChecked) {
+                // Blokowanie przycisku wyboru daty
+                datePickerText.setText(formatDate(new Date()));
+                datePickerText.setEnabled(false);
+                openDatePickerButton.setEnabled(false);
+                openDatePickerContainer.setEnabled(false);
+                openDatePickerContainer.setClickable(false);
+
+                // Pokazanie okresu rozliczeniowego
+                okresRozliczeniowySpinner.setVisibility(View.VISIBLE);
+            } else {
+                // Odblokowanie przycisku wyboru daty
+                datePickerText.setEnabled(true);
+                openDatePickerButton.setEnabled(true);
+                openDatePickerContainer.setEnabled(true);
+                openDatePickerContainer.setClickable(true);
+
+                // Ukrycie okresu rozliczeniowego
+                okresRozliczeniowySpinner.setVisibility(View.GONE);
+            }
+        });
         okresRozliczeniowySpinner = view.findViewById(R.id.okresRozliczeniowySpinner);
         ArrayAdapter<String> okresAdapter = new ArrayAdapter<>(
                 requireContext(),
@@ -85,13 +111,6 @@ public class DodajTransakcjeFragment extends Fragment {
         );
         okresRozliczeniowySpinner.setAdapter(okresAdapter);
 
-        cyclicPaymentCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                okresRozliczeniowySpinner.setVisibility(View.VISIBLE);
-            } else {
-                okresRozliczeniowySpinner.setVisibility(View.GONE);
-            }
-        });
 
 
         Button openDatePickerButton = view.findViewById(R.id.openDatePickerButton);
