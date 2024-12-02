@@ -11,6 +11,7 @@ import com.example.androidproject.transakcje.encje.TransakcjaEntity;
 import java.util.List;
 
 public class TransakcjeEkranGlownyAdapter extends BaseAdapter {
+
     private final Context context;
     private final List<TransakcjaEntity> transactions;
 
@@ -42,11 +43,23 @@ public class TransakcjeEkranGlownyAdapter extends BaseAdapter {
 
         TransakcjaEntity transaction = transactions.get(position);
 
-        TextView amountText = convertView.findViewById(R.id.transactionAmountText);
-        TextView categoryText = convertView.findViewById(R.id.transactionCategoryText);
+        TextView amountTextView = convertView.findViewById(R.id.transactionAmountText);
+        TextView categoryTextView = convertView.findViewById(R.id.transactionCategoryText);
 
-        amountText.setText(transaction.getKwota() + " PLN");
-        categoryText.setText(transaction.getKategoria());
+        int listViewHeight = parent.getHeight();
+        ViewGroup.LayoutParams params = convertView.getLayoutParams();
+        params.height = listViewHeight / 3;
+        convertView.setLayoutParams(params);
+
+        amountTextView.setText(transaction.getKwota() + " PLN");
+        categoryTextView.setText(transaction.getKategoria());
+
+        double kwota = Double.parseDouble(transaction.getKwota());
+        if (kwota < 0) {
+            amountTextView.setTextColor(context.getResources().getColor(R.color.dark_red));
+        } else {
+            amountTextView.setTextColor(context.getResources().getColor(R.color.dark_green));
+        }
 
         return convertView;
     }

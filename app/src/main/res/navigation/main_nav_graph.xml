@@ -78,6 +78,9 @@
         <action
             android:id="@+id/action_ustawieniaFragment_to_historiaLimitowKategoriiFragment"
             app:destination="@id/historiaLimitowKategoriiFragment" />
+        <action
+            android:id="@+id/action_ustawieniaFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/historiaLimitowKategoriiFragment"

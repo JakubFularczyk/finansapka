@@ -1,6 +1,7 @@
 package com.example.androidproject.transakcje.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -12,8 +13,9 @@ import java.util.List;
 @Dao
 public interface TransakcjaDAO {
 
+
     @Insert
-    void insert(TransakcjaEntity transakcja);
+    long insert(TransakcjaEntity transakcja);
 
 
     @Query("SELECT * FROM TransakcjaEntity")
@@ -25,9 +27,40 @@ public interface TransakcjaDAO {
     @Update
     void update(TransakcjaEntity transakcja);
 
+    @Query("SELECT * FROM TransakcjaEntity WHERE uid = :uid")
+    TransakcjaEntity getTransactionByUid(int uid);
+
 
     @Query("SELECT * FROM TransakcjaEntity ORDER BY data DESC")
     List<TransakcjaEntity> getAllSortedByDate();
+
+    @Delete
+    void delete(TransakcjaEntity transakcja);
+
+    @Query("SELECT * FROM TransakcjaEntity ORDER BY data ASC")
+    List<TransakcjaEntity> getOldest();
+
+    @Query("SELECT * FROM TransakcjaEntity ORDER BY data DESC")
+    List<TransakcjaEntity> getNewest();
+
+    @Query("SELECT * FROM TransakcjaEntity WHERE (:isIncome = 1 AND kwota > 0) OR (:isIncome = 0 AND kwota < 0)")
+    List<TransakcjaEntity> getByType(boolean isIncome);
+
+
+    @Query("SELECT * FROM TransakcjaEntity ORDER BY CAST(kwota AS REAL) DESC")
+    List<TransakcjaEntity> getHighest();
+
+    @Query("SELECT * FROM TransakcjaEntity ORDER BY CAST(kwota AS REAL) ASC")
+    List<TransakcjaEntity> getLowest();
+
+    @Query("DELETE FROM TransakcjaEntity WHERE kategoria = :categoryName")
+    void deleteByCategory(String categoryName);
+
+    @Query("DELETE FROM TransakcjaEntity WHERE uid = :parentId OR parentTransactionId = :parentId")
+    void deleteRecurringTransactionWithCopies(int parentId);
+
+    @Query("SELECT * FROM TransakcjaEntity WHERE parentTransactionId = :parentId AND isCyclicChild = 1")
+    List<TransakcjaEntity> getCopiesByParentId(int parentId);
 
 
 

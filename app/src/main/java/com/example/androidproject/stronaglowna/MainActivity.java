@@ -7,10 +7,12 @@ import androidx.room.Room;
 
 import com.example.androidproject.R;
 import com.example.androidproject.baza.BazaDanych;
+import com.example.androidproject.transakcje.dao.KategoriaDAO;
+import com.example.androidproject.transakcje.encje.KategoriaEntity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,20 +23,44 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = Room.databaseBuilder(getApplicationContext(),
-                BazaDanych.class, "baza_danych").allowMainThreadQueries().build();
+                BazaDanych.class, "baza_danych")
+                .allowMainThreadQueries()
+                .build();
+
+        addCategories("Przychód", "Wydatek");
     }
 
-    private final List<String> categories = new ArrayList<>(Arrays.asList("Dom", "Samochód", "Jedzenie"));
+    public List<KategoriaEntity> getCategories() {
+        KategoriaDAO kategoriaDAO = db.kategoriaDAO();
+        return kategoriaDAO.getAll();
+    }
 
-    public List<String> getCategories() {
-        return categories;
+    private void addCategories(String ... categories) {
+        for (String category : categories) {
+            addCategory(category);
+        }
     }
 
     public void addCategory(String category) {
-        if (!categories.contains(category)) {
-            categories.add(category);
+        KategoriaDAO kategoriaDAO = db.kategoriaDAO();
+        List<KategoriaEntity> kategorie = kategoriaDAO.getAll();
+        long count = kategorie.stream() //
+                .map(k -> k.getNazwa()) //
+                .filter(n -> Objects.equals(n, category)) //
+                .count();
+
+        if (count == 0) {
+            kategoriaDAO.insert(prepareCategory(category));
         }
     }
+
+    KategoriaEntity prepareCategory(String nazwa) {
+        KategoriaEntity kategoria = new KategoriaEntity();
+        kategoria.setNazwa(nazwa);
+        return kategoria;
+    }
+
+
 
     public BazaDanych getDb() {
         return db;

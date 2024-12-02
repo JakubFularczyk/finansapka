@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/filter_oldest"
+        android:title="Od najstarszych" />
+    <item
+        android:id="@+id/filter_newest"
+        android:title="Od najnowszych" />
+    <item
+        android:id="@+id/filter_income"
+        android:title="Przychody" />
+    <item
+        android:id="@+id/filter_expenses"
+        android:title="Wydatki" />
+    <item
+        android:id="@+id/filter_highest"
+        android:title="Od najwyższych kwot" />
+    <item
+        android:id="@+id/filter_lowest"
+        android:title="Od najniższych kwot" />
+</menu>

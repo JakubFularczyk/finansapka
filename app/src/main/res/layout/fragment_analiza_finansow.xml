@@ -11,4 +11,133 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
+    <LinearLayout
+        android:id="@+id/przyciskiContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/frame_with_only_top_border"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:weightSum="3">
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:id="@+id/powrotDoMenuIkona"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="Powrót do menu"
+                android:src="@drawable/ic_close" />
+
+            <TextView
+                android:id="@+id/powrotDoMenuText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/google_sans_regular"
+                android:gravity="center"
+                android:text="Powrót do menu"
+                android:textColor="#757575"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/powrotDoMenuButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:id="@+id/dodajKolejnaTransakcjeIkona"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="Dodaj kolejną transakcję"
+                android:src="@drawable/ic_add_transaction" />
+
+            <TextView
+                android:id="@+id/dodajKolejnaTransakcjeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/google_sans_regular"
+                android:gravity="center"
+                android:text="Dodaj kolejną transakcję"
+                android:textColor="#757575"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/dodajKolejnaTransakcjeButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:id="@+id/przejdzDoHistoriiIkona"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="Przejdź do historii"
+                android:src="@drawable/ic_show_history" />
+
+            <TextView
+                android:id="@+id/przejdzDoHistoriiText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/google_sans_regular"
+                android:gravity="center"
+                android:text="Przejdź do historii"
+                android:textColor="#757575"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/przejdzDoHistoriiButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true" />
+        </FrameLayout>
+    </LinearLayout>
+
 </RelativeLayout>

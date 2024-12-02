@@ -40,5 +40,7 @@
     <string name="historia_limitow_kategorii">Historia Limitów Kategorii</string>
     <string name="powrot_do_ustawien">Powrót do ustawień</string>
     <string name="dodaj_nowa_kategorie">Dodaj nową kategorie</string>
+    <string name="historia_transakcji">Historia transakcji</string>
+    <string name="kategorie">Kategorie</string>
 
 </resources>

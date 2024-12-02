@@ -1,5 +1,6 @@
 package com.example.androidproject.transakcje.encje;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
@@ -24,6 +25,19 @@ public class TransakcjaEntity {
 
     public String opis;
 
+    @ColumnInfo(name = "isCyclicChild") // Dodajemy nazwę kolumny w bazie
+    private boolean isCyclicChild = false;
+
+    public Integer parentTransactionId;
+
+
+    public Integer getParentTransactionId() {
+        return parentTransactionId;
+    }
+
+    public void setParentTransactionId(Integer parentTransactionId) {
+        this.parentTransactionId = parentTransactionId;
+    }
 
     public int getUid() {
         return uid;
@@ -63,6 +77,14 @@ public class TransakcjaEntity {
 
     public void setOpis(String opis) {
         this.opis = opis;
+    }
+
+    public boolean isCyclicChild() {
+        return isCyclicChild;
+    }
+
+    public void setCyclicChild(boolean cyclicChild) {
+        isCyclicChild = cyclicChild;
     }
 
 }

@@ -189,7 +189,13 @@
         android:layout_marginTop="8dp"
         android:padding="16dp"
         android:fontFamily="@font/google_sans_regular"
-        android:hint="@string/opcjonalny_opis" />
+        android:hint="@string/opcjonalny_opis"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+        android:gravity="start|top"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:overScrollMode="ifContentScrolls"/>
 
 
     <CheckBox

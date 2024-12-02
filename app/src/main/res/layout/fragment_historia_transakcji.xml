@@ -8,34 +8,33 @@
 
     <!-- Nagłówek -->
     <TextView
-        android:id="@+id/transactionHeader"
-        android:layout_width="wrap_content"
+        android:id="@+id/headerText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/transakcje"
-        android:textSize="35sp"
+        android:text="@string/historia_transakcji"
+        android:textSize="36sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/googlesans_bold"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginTop="8dp" />
 
-    <!-- Przycisk filtra -->
-    <Button
-        android:id="@+id/filterButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/filterIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/transactionHeader"
-        android:layout_marginTop="8dp"
-        android:text="Filtruj"
-        android:visibility="gone" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_filter"
+        />
 
     <!-- Lista transakcji -->
     <ListView
         android:id="@+id/transactionListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@id/transactionHeader"
+        android:layout_below="@id/headerText"
         android:layout_above="@id/przyciskiContainer"
         android:divider="@android:color/transparent"
         android:dividerHeight="8dp"

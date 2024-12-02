@@ -18,6 +18,9 @@
 
 
 
+
+
+
     <View
         android:id="@+id/bottomWhiteBackground"
         android:layout_width="match_parent"
@@ -39,9 +42,9 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_notifications"
             android:contentDescription="@string/powiadomienia"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_notifications" />
 
 
         <View
@@ -70,6 +73,22 @@
         android:shadowColor="#000000"
         android:shadowRadius="3"
         android:fontFamily="@font/googlesans_bold" />
+
+    <TextView
+        android:id="@+id/biezaceSaldoView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/welcomeTextView"
+        android:layout_centerHorizontal="true"
+        android:text="@string/saldo_aktualne"
+        android:layout_marginTop="38dp"
+        android:textSize="22sp"
+        android:textColor="#FFFFFF"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        />
 
 
     <TextView
@@ -289,21 +308,6 @@
     </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/biezaceSaldoView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/welcomeTextView"
-            android:layout_centerHorizontal="true"
-            android:text="@string/saldo_aktualne"
-            android:layout_marginTop="38dp"
-            android:textSize="22sp"
-            android:textColor="#FFFFFF"
-            android:shadowColor="#000000"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
-            />
 
 
 </RelativeLayout>

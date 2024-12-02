@@ -7,14 +7,15 @@
 
     <TextView
         android:id="@+id/headerText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/historia_limitow_kategorii"
-        android:textSize="24sp"
+        android:text="@string/kategorie"
+        android:textSize="40sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/googlesans_bold"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginTop="8dp" />
 
 
     <ListView

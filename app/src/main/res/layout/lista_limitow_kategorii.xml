@@ -1,35 +1,71 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="20dp"
-    android:background="@drawable/frame_with_border">
+    android:padding="8dp"
+    android:layout_marginBottom="8dp">
 
-    <!-- Kategoria po lewej stronie -->
+    <!-- Górny tekst -->
     <TextView
         android:id="@+id/categoryNameText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="start|center_vertical"
-        android:paddingStart="16dp"
-        android:text="Nazwa Kategorii"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/googlesans_bold"
-        android:textColor="@color/black" />
-
-    <!-- Limit kwoty po prawej stronie (jeśli istnieje) -->
-    <TextView
-        android:id="@+id/categoryLimitText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="end|center_vertical"
-        android:paddingEnd="16dp"
-        android:text="100 PLN"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/googlesans_bold"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp"
         android:textColor="@color/black"
-        android:visibility="gone" />
-</LinearLayout>
+        android:text="Kategoria"
+        android:shadowColor="#000000"
+
+        android:gravity="center"
+        android:fontFamily="@font/google_sans_regular"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <!-- Dolny LinearLayout -->
+    <LinearLayout
+        android:id="@+id/limitsView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoryNameText"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"> <!-- Wyrównanie elementów w pionie -->
+
+        <!-- Kwota po lewej stronie -->
+        <TextView
+            android:id="@+id/categoryAmountText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:gravity="end|center_vertical"
+            android:fontFamily="@font/google_sans_regular"
+            android:textColor="@color/black"
+            android:text="15"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <!-- Separator (/) w środku -->
+        <TextView
+            android:id="@+id/divider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/google_sans_regular"
+            android:textColor="@color/black"
+            android:text="/"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <!-- Limit po prawej stronie -->
+        <TextView
+            android:id="@+id/categoryLimitText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:fontFamily="@font/google_sans_regular"
+            android:textColor="@color/black"
+            android:text="100 PLN"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</RelativeLayout>
