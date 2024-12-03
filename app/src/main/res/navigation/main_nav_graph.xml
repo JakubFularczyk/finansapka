@@ -59,6 +59,9 @@
         android:name="com.example.androidproject.analiza.AnalizaFinansowFragment"
         android:label="fragment_analiza_finansow"
         tools:layout="@layout/fragment_analiza_finansow" >
+        <action
+            android:id="@+id/action_analizaFinansowFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/edycjaTransakcjiFragment"
@@ -105,5 +108,17 @@
         <action
             android:id="@+id/action_transakcjaDodanaFragment_to_dodajTransakcjeFragment"
             app:destination="@id/dodajTransakcjeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentWykresyAnalizyFinansowej"
+        android:name="com.example.androidproject.FragmentWykresyAnalizyFinansowej"
+        android:label="fragment_wykresy_analizy_finansowej"
+        tools:layout="@layout/fragment_wykresy_analizy_finansowej" >
+        <action
+            android:id="@+id/action_fragmentWykresyAnalizyFinansowej_to_analizaFinansowFragment"
+            app:destination="@id/analizaFinansowFragment" />
+        <action
+            android:id="@+id/action_fragmentWykresyAnalizyFinansowej_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 </navigation>

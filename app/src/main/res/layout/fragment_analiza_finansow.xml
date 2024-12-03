@@ -1,16 +1,67 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".analiza.AnalizaFinansowFragment">
+    tools:context=".analiza.AnalizaFinansowFragment"
+    android:background="@drawable/background_light">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Nagłówek -->
     <TextView
+        android:id="@+id/headerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/analiza_finansowa"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/googlesans_bold"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="48dp" />
+
+    <!-- Ikona menu w lewym górnym rogu -->
+    <ImageView
+        android:id="@+id/menuButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_menu"
+        android:contentDescription="Menu"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- Lista statystyk -->
+    <ListView
+        android:id="@+id/statsListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_below="@id/headerText"
+        android:layout_above="@id/przyciskiContainer"
+        android:dividerHeight="28dp"
+        android:divider="@android:color/transparent"
+        android:paddingStart="36dp"
+        android:paddingEnd="36dp"
+        android:paddingTop="28dp"
+        android:paddingBottom="28dp" />
+    <TextView
+        android:id="@+id/dodajTransakcjeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:layout_marginStart="100dp"
+        android:text="Dodaj dane dla statystyk!"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:textColor="#707070"
+        android:gravity="center"
+        android:fontFamily="@font/googlesans_bold"
+        android:visibility="gone"
+        />
 
+    <!-- Przyciski na dole -->
     <LinearLayout
         android:id="@+id/przyciskiContainer"
         android:layout_width="match_parent"
@@ -22,20 +73,17 @@
         android:padding="8dp"
         android:weightSum="3">
 
-
+        <!-- Powrót do menu -->
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="8dp">
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/powrotDoMenuIkona"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="Powrót do menu"
                 android:src="@drawable/ic_close" />
@@ -50,7 +98,7 @@
                 android:gravity="center"
                 android:text="Powrót do menu"
                 android:textColor="#757575"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/powrotDoMenuButton"
@@ -61,38 +109,35 @@
                 android:focusable="true" />
         </FrameLayout>
 
-
+        <!-- Przejdź do wykresów -->
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="8dp">
+            android:padding="8dp">
 
             <ImageView
-                android:id="@+id/dodajKolejnaTransakcjeIkona"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:id="@+id/przejdzDoWykresowIkona"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center_horizontal"
-                android:contentDescription="Dodaj kolejną transakcję"
-                android:src="@drawable/ic_add_transaction" />
+                android:contentDescription="Przejdź do wykresów"
+                android:src="@drawable/ic_chart" />
 
             <TextView
-                android:id="@+id/dodajKolejnaTransakcjeText"
+                android:id="@+id/przejdzDoWykresowText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_marginTop="36dp"
                 android:fontFamily="@font/google_sans_regular"
                 android:gravity="center"
-                android:text="Dodaj kolejną transakcję"
+                android:text="Przejdź do wykresów"
                 android:textColor="#757575"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <Button
-                android:id="@+id/dodajKolejnaTransakcjeButton"
+                android:id="@+id/przejdzDoWykresowButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
@@ -100,38 +145,35 @@
                 android:focusable="true" />
         </FrameLayout>
 
-
+        <!-- Wygeneruj plik CSV -->
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="8dp">
+            android:padding="8dp">
 
             <ImageView
-                android:id="@+id/przejdzDoHistoriiIkona"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:id="@+id/WygenerujPlikCSVIkona"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center_horizontal"
-                android:contentDescription="Przejdź do historii"
-                android:src="@drawable/ic_show_history" />
+                android:contentDescription="Wygeneruj plik CSV"
+                android:src="@drawable/ic_generate_csv_file" />
 
             <TextView
-                android:id="@+id/przejdzDoHistoriiText"
+                android:id="@+id/WygenerujPlikCVSText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_marginTop="36dp"
                 android:fontFamily="@font/google_sans_regular"
                 android:gravity="center"
-                android:text="Przejdź do historii"
+                android:text="Wygeneruj plik CSV"
                 android:textColor="#757575"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <Button
-                android:id="@+id/przejdzDoHistoriiButton"
+                android:id="@+id/WygenerujPlikCSVButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
@@ -139,5 +181,4 @@
                 android:focusable="true" />
         </FrameLayout>
     </LinearLayout>
-
 </RelativeLayout>

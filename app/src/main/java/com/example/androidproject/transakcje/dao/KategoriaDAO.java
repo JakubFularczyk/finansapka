@@ -29,6 +29,6 @@ public interface KategoriaDAO {
     @Delete
     void delete(KategoriaEntity kategoria);
 
-
-
+    @Query("SELECT kategoria FROM TransakcjaEntity WHERE kategoria IS NOT NULL GROUP BY kategoria ORDER BY COUNT(*) DESC LIMIT 1")
+    String getMostFrequentCategory();
 }

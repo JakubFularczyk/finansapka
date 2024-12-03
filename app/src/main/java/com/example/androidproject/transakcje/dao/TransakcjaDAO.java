@@ -62,6 +62,17 @@ public interface TransakcjaDAO {
     @Query("SELECT * FROM TransakcjaEntity WHERE parentTransactionId = :parentId AND isCyclicChild = 1")
     List<TransakcjaEntity> getCopiesByParentId(int parentId);
 
+    @Query("SELECT * FROM TransakcjaEntity ORDER BY CAST(kwota AS REAL) DESC LIMIT 1")
+    TransakcjaEntity getHighestTransaction();
+
+    @Query("SELECT strftime('%Y-%m', datetime(data / 1000, 'unixepoch')) " +
+            "FROM TransakcjaEntity " +
+            "GROUP BY strftime('%Y-%m', datetime(data / 1000, 'unixepoch')) " +
+            "ORDER BY COUNT(*) DESC " +
+            "LIMIT 1")
+    String getMonthWithMostTransactions();
+    @Query("SELECT opis FROM TransakcjaEntity WHERE isCyclicChild = 1 GROUP BY opis ORDER BY COUNT(opis) DESC LIMIT 1")
+    String getMostFrequentRecurringTransaction();
 
 
 

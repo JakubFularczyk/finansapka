@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
 
-        addCategories("Przychód", "Wydatek");
+        addCategories("Wydatki", "Przychody", "Inwestycje", "Premie i nagrody", "Wynagrodzenie", "Rozrywka", "Subskrypcje", "Ubrania", "Podróże","Edukacja");
     }
 
     public List<KategoriaEntity> getCategories() {

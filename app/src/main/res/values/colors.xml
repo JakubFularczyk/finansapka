@@ -8,4 +8,5 @@
     <color name="switch_track_color">#4CAF50</color>
     <color name="dark_red">#A92224</color>
     <color name="dark_green">#26803A</color>
+    <color name="light_gray">#D3D3D3</color>
 </resources>
