@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/background_light"
+    android:gravity="center_horizontal">
+
+    <!-- Pusta przestrzeń na przesunięcie treści w dół -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5" />
+
+    <!-- Tytuł ekranu -->
+    <TextView
+        android:id="@+id/recoveryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:fontFamily="@font/googlesans_bold"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="Odzyskiwanie konta"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Kontener dla pytania pomocniczego z przyciskiem -->
+    <FrameLayout
+        android:id="@+id/securityQuestionContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/frame_with_border"
+        android:padding="16dp">
+
+        <!-- Gdy brak pytania pomocniczego -->
+        <TextView
+            android:id="@+id/noSecurityQuestionText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Brak pytania pomocniczego."
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="3"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:visibility="gone"
+            android:fontFamily="@font/googlesans_bold"
+            android:textColor="@color/dark_gray" />
+
+        <!-- Gdy pytanie pomocnicze istnieje -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Pytanie pomocnicze -->
+            <TextView
+                android:id="@+id/securityQuestionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/google_sans_regular"
+                android:text="Pytanie pomocnicze"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Pole na odpowiedź -->
+            <EditText
+                android:id="@+id/securityAnswerInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Odpowiedź na pytanie"
+                android:padding="12dp"
+                android:background="@drawable/frame_with_border"
+                android:textSize="18sp"
+                android:fontFamily="@font/google_sans_regular"
+                android:textColor="@color/black"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Przycisk odzyskiwania konta -->
+            <FrameLayout
+                android:id="@+id/recoverButtonContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/frame_with_border"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/recoverButtonIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_register"
+                    android:contentDescription="Ikona odzyskiwania konta" />
+
+                <TextView
+                    android:id="@+id/recoverButtonText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/google_sans_regular"
+                    android:gravity="center"
+                    android:text="Odzyskaj konto"
+                    android:textColor="#757575"
+                    android:textSize="18sp"
+                    android:padding="5dp" />
+
+                <Button
+                    android:id="@+id/recoverAccountButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </FrameLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Przycisk usuwania konta -->
+    <FrameLayout
+        android:id="@+id/deleteButtonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/frame_with_border"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/deleteButtonIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="Ikona usuwania konta" />
+
+        <TextView
+            android:id="@+id/deleteButtonText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/google_sans_regular"
+            android:gravity="center"
+            android:text="Usuń konto"
+            android:textColor="#757575"
+            android:textSize="18sp"
+            android:padding="5dp" />
+
+        <Button
+            android:id="@+id/deleteAccountButton"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true" />
+    </FrameLayout>
+
+    <!-- Pusta przestrzeń na dole -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2" />
+</LinearLayout>

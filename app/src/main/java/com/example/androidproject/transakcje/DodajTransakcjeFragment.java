@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +15,23 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.androidproject.R;
 import com.example.androidproject.baza.BazaDanych;
-import com.example.androidproject.baza.TransactionUtils;
+import com.example.androidproject.utils.TransactionUtils;
 import com.example.androidproject.customviews.CustomSwitch;
 import com.example.androidproject.stronaglowna.MainActivity;
 import com.example.androidproject.transakcje.dao.KategoriaDAO;
 import com.example.androidproject.transakcje.dao.TransakcjaCyklicznaDAO;
 import com.example.androidproject.transakcje.dao.TransakcjaDAO;
 import com.example.androidproject.transakcje.encje.KategoriaEntity;
-import com.example.androidproject.transakcje.encje.TransakcjaCyklicznaEntity;
 import com.example.androidproject.transakcje.encje.TransakcjaEntity;
+import com.example.androidproject.transakcje.service.TransakcjeService;
+
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -48,9 +46,11 @@ public class DodajTransakcjeFragment extends Fragment {
     private TextView datePickerText;
     private boolean isIncome = true;
     private CheckBox cyclicPaymentCheckbox;
+    private TransakcjeService transakcjeService;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        transakcjeService = new TransakcjeService((MainActivity) getActivity());
         return inflater.inflate(R.layout.fragment_dodaj_transakcje, container, false);
     }
 
@@ -78,7 +78,8 @@ public class DodajTransakcjeFragment extends Fragment {
         ArrayAdapter<String> okresAdapter = new ArrayAdapter<>(
                 requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
-                Arrays.asList("Dzienna", "Tygodniowa", "Miesięczna", "Roczna")
+                //Arrays.asList("Dzienna", "Tygodniowa", "Miesięczna", "Roczna")
+                TransactionUtils.OPTIONS
         );
         okresRozliczeniowySpinner.setAdapter(okresAdapter);
 
@@ -105,24 +106,12 @@ public class DodajTransakcjeFragment extends Fragment {
     }
 
     private void toggleRecurringPaymentViews(View view, boolean isChecked) {
-        View openDatePickerButton = view.findViewById(R.id.openDatePickerButton);
-        FrameLayout openDatePickerContainer = view.findViewById(R.id.openDatePickerContainer);
-
+        // Ustaw widoczność spinnera intewałów
         if (isChecked) {
-            datePickerText.setText(formatDate(new Date()));
-            toggleDatePickerEnabled(false, openDatePickerButton, openDatePickerContainer);
             okresRozliczeniowySpinner.setVisibility(View.VISIBLE);
         } else {
-            toggleDatePickerEnabled(true, openDatePickerButton, openDatePickerContainer);
             okresRozliczeniowySpinner.setVisibility(View.GONE);
         }
-    }
-
-    private void toggleDatePickerEnabled(boolean isEnabled, View button, FrameLayout container) {
-        datePickerText.setEnabled(isEnabled);
-        button.setEnabled(isEnabled);
-        container.setEnabled(isEnabled);
-        container.setClickable(isEnabled);
     }
 
     private void setupDatePicker(View view) {
@@ -170,11 +159,17 @@ public class DodajTransakcjeFragment extends Fragment {
                     localCalendar.getTime()
             );
 
+            encja.setParentTransactionId(null);
+            encja.setCyclicChild(false);
+
             TransakcjaDAO transakcjaDAO = getTransakcjaDao();
             long transactionId = transakcjaDAO.insert(encja);
             encja.setUid((int) transactionId);
+
             if (cyclicPaymentCheckbox.isChecked()) {
-                handleRecurringTransaction(encja);
+                String interval = okresRozliczeniowySpinner.getSelectedItem().toString();
+                Date startDate = localCalendar.getTime();
+                transakcjeService.handleRecurringTransaction(encja, interval, startDate);
             }
 
 
@@ -191,28 +186,10 @@ public class DodajTransakcjeFragment extends Fragment {
         }
     }
 
-    private void handleRecurringTransaction(TransakcjaEntity transaction) {
-        String interval = okresRozliczeniowySpinner.getSelectedItem().toString();
-        Date nextDate = TransactionUtils.calculateNextDate(localCalendar.getTime(), interval);
 
-        TransakcjaCyklicznaEntity recurringTransaction = new TransakcjaCyklicznaEntity();
-        recurringTransaction.setIdTransakcji(transaction.getUid());
-        recurringTransaction.setDataOd(nextDate);
-        recurringTransaction.setInterwal(interval);
-
-        TransakcjaCyklicznaDAO recurringDao = getRecurringTransactionDao();
-        recurringDao.insert(recurringTransaction);
-
-        Log.d("RecurringTransaction", "Recurring transaction scheduled for: " + nextDate);
-    }
 
     private void updateCategoryAfterTransaction(TransakcjaEntity transakcja) {
-        KategoriaDAO kategoriaDAO = getKategoriaDao();
-        KategoriaEntity kategoria = kategoriaDAO.findByName(transakcja.getKategoria());
-        if (kategoria != null && kategoria.getLimit() != null && !kategoria.getLimit().isEmpty()) {
-            kategoria.aktualnaKwota += Double.parseDouble(transakcja.getKwota());
-            kategoriaDAO.update(kategoria);
-        }
+        transakcjeService.updateCategoryAfterTransaction(transakcja);
     }
 
 

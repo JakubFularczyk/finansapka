@@ -1,14 +1,20 @@
 package com.example.androidproject.ustawienia;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.provider.MediaStore;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,18 +22,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.androidproject.R;
+import com.example.androidproject.baza.BazaDanych;
+import com.example.androidproject.stronaglowna.MainActivity;
+import com.example.androidproject.transakcje.dao.KategoriaDAO;
+import com.example.androidproject.transakcje.dao.TransakcjaCyklicznaDAO;
+import com.example.androidproject.transakcje.dao.TransakcjaDAO;
+import com.example.androidproject.transakcje.dao.UserDAO;
+import com.example.androidproject.transakcje.encje.UserEntity;
+import com.example.androidproject.utils.ExportImportManager;
 
 public class UstawieniaFragment extends Fragment {
 
-    public UstawieniaFragment() {
-        // Required empty public constructor
-    }
+    private ActivityResultLauncher<Intent> importLauncher;
 
-    public static UstawieniaFragment newInstance() {
-        return new UstawieniaFragment();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,10 +45,50 @@ public class UstawieniaFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        importLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
+                        Uri uri = result.getData().getData();
+                        if (uri != null) {
+                            // Wywołanie importu danych z poprawnym przekazaniem URI
+                            ExportImportManager.importDatabaseFromJSON(requireContext(), uri);
+                        } else {
+                            Toast.makeText(requireContext(), "Nie wybrano pliku", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
+
+
+        Button exportButton = view.findViewById(R.id.eksportBazyButton);
+        Button importButton = view.findViewById(R.id.importBazyDanychButton);
+
+        exportButton.setOnClickListener(v -> {
+            ExportImportManager.exportDatabaseToJSON(requireContext());
+        });
+
+        importButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.setType("application/json"); // Ustaw typ MIME na JSON
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+            // Ustaw domyślny katalog na "Documents"
+            intent.putExtra("android.provider.extra.INITIAL_URI", MediaStore.Files.getContentUri("external"));
+
+            importLauncher.launch(intent);
+        });
     }
+
 
     private void initViews(View view) {
         setupDeleteAccountButton(view);
@@ -46,6 +96,7 @@ public class UstawieniaFragment extends Fragment {
         setupCategoryLimitButton(view);
         setupReturnToMenuButton(view);
     }
+
 
     private void setupDeleteAccountButton(View view) {
         Button usunKontoButton = view.findViewById(R.id.usunKontoButton);
@@ -76,7 +127,10 @@ public class UstawieniaFragment extends Fragment {
         input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         builder.setView(input);
 
-        builder.setPositiveButton("Zmień", (dialog, which) -> validateAndSavePin(input.getText().toString()));
+        builder.setPositiveButton("Zmień", (dialog, which) -> {
+            String newPin = input.getText().toString();
+            validateAndSavePin(newPin);
+        });
         builder.setNegativeButton("Anuluj", (dialog, which) -> dialog.dismiss());
 
         builder.create().show();
@@ -91,6 +145,17 @@ public class UstawieniaFragment extends Fragment {
     }
 
     private void saveNewPin(String newPin) {
+        // Pobierz bazę danych i DAO z MainActivity
+        MainActivity mainActivity = (MainActivity) getActivity();
+        BazaDanych db = mainActivity.getDb();
+        UserDAO userDAO = db.userDAO();
+
+        int userId = 1; // Powiązany z zalogowanym użytkownikiem
+
+        // Zaktualizuj PIN w bazie danych
+        userDAO.updateUserPin(userId, newPin);
+
+        // Powiadom użytkownika
         AlertDialog.Builder successBuilder = new AlertDialog.Builder(requireContext());
         successBuilder.setTitle("Sukces");
         successBuilder.setMessage("PIN został zmieniony pomyślnie!");
@@ -110,8 +175,33 @@ public class UstawieniaFragment extends Fragment {
     }
 
     private void deleteAccount() {
-        // Implementacja logiki usuwania konta
-        // Na razie zamykamy dialog
+        MainActivity mainActivity = (MainActivity) getActivity();
+        BazaDanych db = mainActivity.getDb();
+        UserDAO userDAO = db.userDAO();
+        TransakcjaDAO transakcjaDAO = db.transakcjaDAO();
+        TransakcjaCyklicznaDAO transakcjaCyklicznaDAO = db.transakcjaCyklicznaDAO();
+        KategoriaDAO kategoriaDAO = db.kategoriaDAO();
+
+        try {
+            UserEntity user = userDAO.findFirstUser();
+            int userId = user.getId();
+
+            // Usuń dane powiązane z użytkownikiem
+            transakcjaDAO.clearTable();
+            transakcjaCyklicznaDAO.clearTable();
+            kategoriaDAO.clearTable();
+
+            // Usuń użytkownika
+            userDAO.deleteUserById(userId);
+
+
+
+            // Przekierowanie do ekranu rejestracji
+            NavController navController = Navigation.findNavController(requireView());
+            navController.navigate(R.id.action_ustawieniaFragment_to_rejestracjaFragment);
+        } catch (IllegalStateException e) {
+            Toast.makeText(requireContext(), "Nie udało się usunąć konta: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void showErrorPopup(String title, String message) {

@@ -44,6 +44,8 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation libs.material.v190
     implementation libs.mpandroidchart
+
+
     // To use Kotlin annotation processing tool (kapt)
     //kapt "androidx.room:room-compiler:$room_version"
     // To use Kotlin Symbol Processing (KSP)

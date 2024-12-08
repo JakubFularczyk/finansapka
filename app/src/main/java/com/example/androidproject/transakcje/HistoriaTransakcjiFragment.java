@@ -22,12 +22,14 @@ import com.example.androidproject.baza.BazaDanych;
 import com.example.androidproject.stronaglowna.MainActivity;
 import com.example.androidproject.transakcje.dao.TransakcjaDAO;
 import com.example.androidproject.transakcje.encje.TransakcjaEntity;
+import com.example.androidproject.transakcje.service.TransakcjeService;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class HistoriaTransakcjiFragment extends Fragment {
+
 
     private ListView transactionListView;
 
@@ -88,7 +90,7 @@ public class HistoriaTransakcjiFragment extends Fragment {
     }
 
     private void setupTransactionListView(List<TransakcjaEntity> transactions) {
-        HistoriaTransakcjiAdapter adapter = new HistoriaTransakcjiAdapter(requireContext(), transactions);
+        HistoriaTransakcjiAdapter adapter = new HistoriaTransakcjiAdapter(requireContext(), getActivity(), transactions);
         transactionListView.setAdapter(adapter);
         transactionListView.setOnItemClickListener((parent, view, position, id) -> navigateToEditTransaction(view, transactions.get(position)));
     }
@@ -106,6 +108,7 @@ public class HistoriaTransakcjiFragment extends Fragment {
         bundle.putString("kategoria", transaction.getKategoria());
         bundle.putSerializable("data", transaction.getData());
         bundle.putString("opis", transaction.getOpis());
+        //bundle.putBoolean("cykliczna", transakcjeService.isRecurring(transaction));
         return bundle;
     }
 
@@ -164,7 +167,7 @@ public class HistoriaTransakcjiFragment extends Fragment {
     }
 
     private void updateTransactionListView(List<TransakcjaEntity> transactions) {
-        HistoriaTransakcjiAdapter adapter = new HistoriaTransakcjiAdapter(requireContext(), transactions);
+        HistoriaTransakcjiAdapter adapter = new HistoriaTransakcjiAdapter(requireContext(), getActivity(), transactions);
         transactionListView.setAdapter(adapter);
     }
 

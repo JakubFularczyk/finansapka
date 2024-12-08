@@ -31,7 +31,7 @@
                 android:shadowRadius="4"
                 android:gravity="start|center_vertical"
                 android:fontFamily="@font/google_sans_regular"
-                android:textSize="23sp" />
+                android:textSize="21sp" />
         </FrameLayout>
 
 

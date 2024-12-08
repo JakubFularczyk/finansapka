@@ -1,5 +1,6 @@
 package com.example.androidproject.adaptery;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.example.androidproject.transakcje.dao.TransakcjaCyklicznaDAO;
 import com.example.androidproject.transakcje.dao.TransakcjaDAO;
 import com.example.androidproject.transakcje.encje.KategoriaEntity;
 import com.example.androidproject.transakcje.encje.TransakcjaEntity;
+import com.example.androidproject.transakcje.service.TransakcjeService;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -29,11 +31,13 @@ import java.util.Locale;
 
 public class HistoriaTransakcjiAdapter extends BaseAdapter {
 
+    private TransakcjeService transakcjeService;
     private final Context context;
     private final List<TransakcjaEntity> transactions;
 
-    public HistoriaTransakcjiAdapter(Context context, List<TransakcjaEntity> transactions) {
+    public HistoriaTransakcjiAdapter(Context context, Activity activity, List<TransakcjaEntity> transactions) {
         this.context = context;
+        this.transakcjeService = new TransakcjeService((MainActivity) activity);
         this.transactions = transactions;
     }
 
@@ -84,10 +88,13 @@ public class HistoriaTransakcjiAdapter extends BaseAdapter {
             amountTextView.setTextColor(context.getResources().getColor(R.color.dark_green));
         }
 
-        if (transaction.getParentTransactionId() == null && !transaction.isCyclicChild()) {
-            recurringLabel.setVisibility(View.VISIBLE);
+        TransakcjaCyklicznaDAO recurringDAO = ((MainActivity) context).getDb().transakcjaCyklicznaDAO();
+        boolean isRecurring = recurringDAO.isRecurringTransaction(transaction.getUid());
+
+        if (isRecurring) {
+            recurringLabel.setVisibility(View.VISIBLE); // Pokaż etykietę "Transakcja cykliczna"
         } else {
-            recurringLabel.setVisibility(View.GONE);
+            recurringLabel.setVisibility(View.GONE); // Ukryj etykietę
         }
 
         convertView.setOnLongClickListener(v -> {
@@ -95,29 +102,24 @@ public class HistoriaTransakcjiAdapter extends BaseAdapter {
                 v.animate().scaleX(1.0f).scaleY(1.0f).setDuration(150);
             });
 
-            showPopupMenu(v, transaction, position);
+            showPopupMenu(v, transaction, position, isRecurring);
             return true;
         });
 
         return convertView;
     }
 
-    private boolean isRecurring(TransakcjaEntity transaction) {
-        TransakcjaCyklicznaDAO recurringDAO = ((MainActivity) context).getDb().transakcjaCyklicznaDAO();
-        return !recurringDAO.findByIdTransakcji(transaction.getUid()).isEmpty() || transaction.isCyclicChild();
-    }
-
-    private void showPopupMenu(View anchor, TransakcjaEntity transaction, int position) {
+    private void showPopupMenu(View anchor, TransakcjaEntity transaction, int position, boolean isRecurring) {
         PopupMenu popupMenu = new PopupMenu(context, anchor);
         popupMenu.getMenuInflater().inflate(R.menu.historia_transakcji_popup_menu, popupMenu.getMenu());
 
-        if (transaction.getParentTransactionId() == null && !transaction.isCyclicChild()) {
-            // Opcje dla transakcji matki
-            popupMenu.getMenu().findItem(R.id.action_delete_recurring).setVisible(true);
+
+
+        if (isRecurring) {
+            popupMenu.getMenu().findItem(R.id.action_delete_recurring).setVisible(true); // Opcja dla cyklicznych
             popupMenu.getMenu().findItem(R.id.action_delete).setVisible(false);
         } else {
-            // Opcje dla kopii
-            popupMenu.getMenu().findItem(R.id.action_delete_recurring).setVisible(false);
+            popupMenu.getMenu().findItem(R.id.action_delete_recurring).setVisible(false); // Opcja dla zwykłych
             popupMenu.getMenu().findItem(R.id.action_delete).setVisible(true);
         }
 
@@ -129,7 +131,7 @@ public class HistoriaTransakcjiAdapter extends BaseAdapter {
                 deleteTransaction(transaction, position);
                 return true;
             } else if (item.getItemId() == R.id.action_delete_recurring) {
-                if (transaction.getParentTransactionId() == null && !transaction.isCyclicChild()) {
+                if (isRecurring) {
                     deleteRecurringTransaction(transaction);
                 }
                 return true;
@@ -151,6 +153,7 @@ public class HistoriaTransakcjiAdapter extends BaseAdapter {
     }
     private void disableRecurringTransaction(TransakcjaEntity transaction) {
         try {
+            // TODO mozna zamienic na com.example.androidproject.transakcje.service.TransakcjeService.removeRecurringTransaction
             TransakcjaCyklicznaDAO recurringDAO = ((MainActivity) context).getDb().transakcjaCyklicznaDAO();
 
             // Usuń rekord cykliczności
@@ -161,6 +164,7 @@ public class HistoriaTransakcjiAdapter extends BaseAdapter {
             Toast.makeText(context, "Błąd podczas wyłączania cykliczności", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void deleteAllRecurringTransactions(TransakcjaEntity transaction) {
         try {
             TransakcjaDAO transakcjaDAO = ((MainActivity) context).getDb().transakcjaDAO();
@@ -195,6 +199,7 @@ public class HistoriaTransakcjiAdapter extends BaseAdapter {
         bundle.putString("kategoria", transaction.getKategoria());
         bundle.putSerializable("data", transaction.getData());
         bundle.putString("opis", transaction.getOpis());
+        bundle.putBoolean("cykliczna", transakcjeService.isRecurring(transaction));
 
         NavController navController = Navigation.findNavController(view);
         navController.navigate(R.id.action_historiaTransakcjiFragment_to_edycjaTransakcjiFragment, bundle);

@@ -26,7 +26,7 @@ public class TransakcjaEntity {
     public String opis;
 
     @ColumnInfo(name = "isCyclicChild") // Dodajemy nazwę kolumny w bazie
-    private boolean isCyclicChild = false;
+    public boolean isCyclicChild = false;
 
     public Integer parentTransactionId;
 

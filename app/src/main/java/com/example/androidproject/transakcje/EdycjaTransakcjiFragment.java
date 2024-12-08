@@ -19,12 +19,15 @@ import android.widget.Toast;
 
 import com.example.androidproject.R;
 import com.example.androidproject.baza.BazaDanych;
+import com.example.androidproject.utils.TransactionUtils;
 import com.example.androidproject.customviews.CustomSwitch;
 import com.example.androidproject.stronaglowna.MainActivity;
 import com.example.androidproject.transakcje.dao.KategoriaDAO;
 import com.example.androidproject.transakcje.dao.TransakcjaDAO;
 import com.example.androidproject.transakcje.encje.KategoriaEntity;
+import com.example.androidproject.transakcje.encje.TransakcjaCyklicznaEntity;
 import com.example.androidproject.transakcje.encje.TransakcjaEntity;
+import com.example.androidproject.transakcje.service.TransakcjeService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,15 +39,19 @@ import java.util.stream.Collectors;
 
 public class EdycjaTransakcjiFragment extends Fragment {
 
+    private Calendar localCalendar = Calendar.getInstance();
     private EditText kwotaInput, opisInput;
     private Spinner kategoriaSpinner, okresRozliczeniowySpinner;
     private TextView datePickerText;
     private CheckBox cyclicPaymentCheckbox;
     private CustomSwitch transactionTypeCustomSwitch;
     private int transactionUid;
+    private TransakcjeService transakcjeService;
+    private boolean wasCyclic;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        transakcjeService = new TransakcjeService((MainActivity) getActivity());
         return inflater.inflate(R.layout.fragment_edycja_transakcji, container, false);
     }
 
@@ -64,6 +71,22 @@ public class EdycjaTransakcjiFragment extends Fragment {
         datePickerText = view.findViewById(R.id.datePickerText);
         cyclicPaymentCheckbox = view.findViewById(R.id.cyclicPaymentCheckbox);
         transactionTypeCustomSwitch = view.findViewById(R.id.transactionTypeCustomSwitch);
+
+        cyclicPaymentCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    okresRozliczeniowySpinner.setVisibility(View.VISIBLE);
+                } else {
+                    okresRozliczeniowySpinner.setVisibility(View.GONE);
+                }
+        });
+
+        ArrayAdapter<String> okresAdapter = new ArrayAdapter<>(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+
+                TransactionUtils.OPTIONS
+        );
+        okresRozliczeniowySpinner.setAdapter(okresAdapter);
     }
 
     private void loadArguments() {
@@ -73,6 +96,7 @@ public class EdycjaTransakcjiFragment extends Fragment {
             String kategoria = getArguments().getString("kategoria");
             Date data = (Date) getArguments().getSerializable("data");
             String opis = getArguments().getString("opis");
+            wasCyclic = getArguments().getBoolean("cykliczna");
 
             fillFields(kwotaString, kategoria, data, opis);
         }
@@ -84,6 +108,14 @@ public class EdycjaTransakcjiFragment extends Fragment {
         kwotaInput.setText(formatAmount(kwotaString));
         opisInput.setText(opis);
         initKategoriaSpinner(kategoria);
+        cyclicPaymentCheckbox.setChecked(wasCyclic);
+
+        TransakcjaCyklicznaEntity recurringTransaction = transakcjeService.getRecurringTransaction(transactionUid);
+        if (recurringTransaction != null) {
+            String interwal = recurringTransaction.interwal;
+            okresRozliczeniowySpinner.setSelection(TransactionUtils.OPTIONS.indexOf(interwal));
+            okresRozliczeniowySpinner.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setTransactionType(String kwotaString) {
@@ -158,6 +190,17 @@ public class EdycjaTransakcjiFragment extends Fragment {
             TransakcjaEntity updatedTransaction = createUpdatedTransaction(amount, newCategory, newDescription, newDate);
             updateCategoryCurrentAmount(oldTransaction, updatedTransaction);
             getTransakcjaDao().update(updatedTransaction);
+
+            if (cyclicPaymentCheckbox.isChecked()) {
+                String interval = okresRozliczeniowySpinner.getSelectedItem().toString();
+                Date startDate = localCalendar.getTime();
+                transakcjeService.handleRecurringTransaction(updatedTransaction, interval, startDate);
+            } else {
+                if (wasCyclic) {
+                    transakcjeService.removeRecurringTransaction(updatedTransaction);
+                }
+            }
+
             navigateToHistory(view);
         } catch (NumberFormatException e) {
             Toast.makeText(requireContext(), "Nieprawidłowy format kwoty", Toast.LENGTH_SHORT).show();

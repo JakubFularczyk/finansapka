@@ -14,8 +14,12 @@ public class KategoriaEntity {
 
     public String limit;
 
+    public void setAktualnaKwota(Double aktualnaKwota) {
+        this.aktualnaKwota = aktualnaKwota;
+    }
+
     @ColumnInfo(defaultValue = "0")
-    public double aktualnaKwota;
+    public Double aktualnaKwota;
 
     public int getUid() {
         return uid;

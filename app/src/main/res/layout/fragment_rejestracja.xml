@@ -1,0 +1,179 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/background_light"
+    android:gravity="center_horizontal">
+
+    <!-- Pusta przestrzeń dla przesunięcia kontenera w 1/4 ekranu -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5" />
+
+    <!-- Tytuł aplikacji -->
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:fontFamily="@font/googlesans_bold"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="Witaj w FinansApka"
+         />
+
+    <!-- Kontener dla rejestracji -->
+    <FrameLayout
+        android:id="@+id/registerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/frame_with_border"
+        android:padding="16dp">
+
+        <!-- Treść kontenera rejestracji -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <!-- Nagłówek w kontenerze -->
+            <TextView
+                android:id="@+id/registerHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/googlesans_bold"
+                android:text="Rejestracja"
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <!-- Pole do wprowadzenia imienia -->
+            <EditText
+                android:id="@+id/nameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Podaj imię"
+                android:padding="12dp"
+                android:background="@drawable/frame_with_border"
+                android:textSize="18sp"
+                android:fontFamily="@font/google_sans_regular"
+                android:textColor="@color/black"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Pole do ustawienia PIN -->
+            <EditText
+                android:id="@+id/pinInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ustaw PIN"
+                android:inputType="numberPassword"
+                android:padding="12dp"
+                android:background="@drawable/frame_with_border"
+                android:textSize="18sp"
+                android:fontFamily="@font/google_sans_regular"
+                android:textColor="@color/black"
+                android:layout_marginBottom="16dp" />
+
+
+
+            <!-- Przycisk rejestracji -->
+            <FrameLayout
+                android:id="@+id/registerButtonContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/frame_with_border"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/registerButtonIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_register"
+                    android:contentDescription="Ikona rejestracji" />
+
+                <TextView
+                    android:id="@+id/registerButtonText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/google_sans_regular"
+                    android:gravity="center"
+                    android:text="Zarejestruj się"
+                    android:textColor="#757575"
+                    android:textSize="18sp"
+                    android:padding="5dp" />
+
+                <Button
+                    android:id="@+id/registerButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </FrameLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Checkbox pytania bezpieczeństwa -->
+    <CheckBox
+        android:id="@+id/securityQuestionCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Ustawić pytanie bezpieczeństwa?"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:fontFamily="@font/google_sans_regular" />
+
+    <!-- Kontener dla pytania bezpieczeństwa -->
+    <FrameLayout
+        android:id="@+id/securityQuestionContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/frame_with_border"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Spinner dla pytania bezpieczeństwa -->
+            <Spinner
+                android:id="@+id/securityQuestionSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:entries="@array/security_questions" />
+
+            <!-- Pole do wpisania odpowiedzi -->
+            <EditText
+                android:id="@+id/securityAnswerInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Wpisz odpowiedź"
+                android:layout_marginBottom="12dp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Pusta przestrzeń dla reszty ekranu -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2" />
+</LinearLayout>

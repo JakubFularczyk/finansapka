@@ -6,9 +6,12 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.androidproject.transakcje.dto.KategoriaSum;
+import com.example.androidproject.transakcje.dto.MonthSum;
 import com.example.androidproject.transakcje.encje.TransakcjaEntity;
 
 import java.util.List;
+import java.util.Map;
 
 @Dao
 public interface TransakcjaDAO {
@@ -17,6 +20,8 @@ public interface TransakcjaDAO {
     @Insert
     long insert(TransakcjaEntity transakcja);
 
+    @Query("DELETE FROM transakcjaentity")
+    void clearTable();
 
     @Query("SELECT * FROM TransakcjaEntity")
     List<TransakcjaEntity> getAll();
@@ -56,9 +61,6 @@ public interface TransakcjaDAO {
     @Query("DELETE FROM TransakcjaEntity WHERE kategoria = :categoryName")
     void deleteByCategory(String categoryName);
 
-    @Query("DELETE FROM TransakcjaEntity WHERE uid = :parentId OR parentTransactionId = :parentId")
-    void deleteRecurringTransactionWithCopies(int parentId);
-
     @Query("SELECT * FROM TransakcjaEntity WHERE parentTransactionId = :parentId AND isCyclicChild = 1")
     List<TransakcjaEntity> getCopiesByParentId(int parentId);
 
@@ -71,9 +73,40 @@ public interface TransakcjaDAO {
             "ORDER BY COUNT(*) DESC " +
             "LIMIT 1")
     String getMonthWithMostTransactions();
+
     @Query("SELECT opis FROM TransakcjaEntity WHERE isCyclicChild = 1 GROUP BY opis ORDER BY COUNT(opis) DESC LIMIT 1")
     String getMostFrequentRecurringTransaction();
 
+    @Query("SELECT kategoria AS kategoria, SUM(CAST(kwota AS REAL)) AS suma " +
+            "FROM TransakcjaEntity " +
+            "WHERE kwota < 0 AND strftime('%Y-%m', datetime(data / 1000, 'unixepoch')) = strftime('%Y-%m', 'now') " +
+            "GROUP BY kategoria")
+    List<KategoriaSum> getMonthlyExpensesByCategory();
 
+
+    @Query("SELECT kategoria, SUM(CAST(kwota AS REAL)) AS suma " +
+            "FROM TransakcjaEntity " +
+            "WHERE kwota > 0 AND strftime('%Y-%m', datetime(data / 1000, 'unixepoch')) = strftime('%Y-%m', 'now') " +
+            "GROUP BY kategoria")
+    List<KategoriaSum> getMonthlyIncomesByCategory();
+
+    @Query("SELECT strftime('%m', datetime(data / 1000, 'unixepoch')) AS month, " +
+            "SUM(CAST(kwota AS REAL)) AS total " +
+            "FROM TransakcjaEntity " +
+            "WHERE kwota < 0 " + // Wydatki
+            "GROUP BY month " +
+            "ORDER BY month")
+    List<MonthSum> getMonthlyExpenses();
+
+    @Query("SELECT strftime('%m', datetime(data / 1000, 'unixepoch')) AS month, " +
+            "SUM(CAST(kwota AS REAL)) AS total " +
+            "FROM TransakcjaEntity " +
+            "WHERE kwota > 0 " + // Przychody
+            "GROUP BY month " +
+            "ORDER BY month")
+    List<MonthSum> getMonthlyIncomes();
+
+    @Query("SELECT * FROM TransakcjaEntity WHERE uid = :id LIMIT 1")
+    TransakcjaEntity getById(int id);
 
 }

@@ -1,0 +1,134 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Pusta przestrzeń dla przesunięcia kontenera -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7" />
+
+
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:fontFamily="@font/googlesans_bold"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="FinansApka" />
+
+
+
+    <!-- Kontener dla logowania -->
+    <FrameLayout
+        android:id="@+id/loginContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/frame_with_border"
+        android:padding="16dp">
+
+
+
+        <!-- Treść kontenera logowania -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <!-- Nagłówek powitalny -->
+            <TextView
+                android:id="@+id/loginHeaderText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/googlesans_bold"
+                android:text="Logowanie"
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <!-- Pole do wprowadzenia PIN-u -->
+            <EditText
+                android:id="@+id/pinInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Wprowadź PIN"
+                android:inputType="numberPassword"
+                android:padding="12dp"
+                android:background="@drawable/frame_with_border"
+                android:textSize="18sp"
+                android:fontFamily="@font/google_sans_regular"
+                android:textColor="@color/black"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Przycisk logowania -->
+            <FrameLayout
+                android:id="@+id/loginButtonContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/frame_with_border"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/loginButtonIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_login"
+                    android:contentDescription="Ikona logowania" />
+
+                <TextView
+                    android:id="@+id/loginButtonText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/google_sans_regular"
+                    android:gravity="center"
+                    android:text="Zaloguj się"
+                    android:textColor="#757575"
+                    android:textSize="18sp"
+                    android:padding="5dp" />
+
+                <Button
+                    android:id="@+id/loginButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </FrameLayout>
+        </LinearLayout>
+    </FrameLayout>
+    <TextView
+        android:id="@+id/forgottenPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/google_sans_regular"
+        android:text="Nie pamiętam hasła"
+        android:textColor="@color/blue"
+        android:textSize="16sp"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- Pusta przestrzeń dla reszty ekranu -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.3" />
+</LinearLayout>

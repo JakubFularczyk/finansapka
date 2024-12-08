@@ -14,15 +14,9 @@ public class Statystyka {
         return naglowek;
     }
 
-    public void setNaglowek(String naglowek) {
-        this.naglowek = naglowek;
-    }
-
     public String getWartosc() {
         return wartosc;
     }
 
-    public void setWartosc(String wartosc) {
-        this.wartosc = wartosc;
-    }
+
 }

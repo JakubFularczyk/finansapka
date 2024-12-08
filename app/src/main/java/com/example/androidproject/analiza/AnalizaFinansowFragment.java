@@ -1,12 +1,17 @@
 package com.example.androidproject.analiza;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +27,8 @@ import com.example.androidproject.transakcje.dao.TransakcjaDAO;
 import com.example.androidproject.transakcje.encje.TransakcjaEntity;
 
 
-import java.text.SimpleDateFormat;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,7 +37,7 @@ import java.util.Locale;
 
 public class AnalizaFinansowFragment extends Fragment {
 
-    private ListView statsListView;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -48,6 +54,13 @@ public class AnalizaFinansowFragment extends Fragment {
             navController.navigate(R.id.action_analizaFinansowFragment_to_mainFragment);
         });
 
+        view.findViewById(R.id.przejdzDoWykresowButton).setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(view);
+            navController.navigate(R.id.action_analizaFinansowFragment_to_fragmentWykresyAnalizyFinansowej);
+        });
+
+        view.findViewById(R.id.WygenerujPlikCSVButton).setOnClickListener(v -> generujPlikCSV());
+
         TextView emptyStateText = view.findViewById(R.id.dodajTransakcjeText);
         ListView statsListView = view.findViewById(R.id.statsListView);
 
@@ -62,6 +75,55 @@ public class AnalizaFinansowFragment extends Fragment {
 
             StatystykiAdapter adapter = new StatystykiAdapter(requireContext(), statystyki);
             statsListView.setAdapter(adapter);
+        }
+    }
+
+    private void generujPlikCSV() {
+        TransakcjaDAO transakcjaDAO = ((MainActivity) getActivity()).getDb().transakcjaDAO();
+        List<TransakcjaEntity> transakcje = transakcjaDAO.getAll();
+
+        if (transakcje.isEmpty()) {
+            Toast.makeText(requireContext(), "Brak transakcji do zapisania", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String fileName = "Transakcje.csv";
+        try {
+            // Konfiguracja MediaStore do zapisu w publicznym katalogu Documents
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
+            contentValues.put(MediaStore.Files.FileColumns.MIME_TYPE, "text/csv");
+            contentValues.put(MediaStore.Files.FileColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS);
+
+            Uri uri = requireContext().getContentResolver().insert(MediaStore.Files.getContentUri("external"), contentValues);
+
+            if (uri == null) {
+                Toast.makeText(requireContext(), "Błąd przy tworzeniu pliku", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Tworzenie pliku CSV
+            try (OutputStream outputStream = requireContext().getContentResolver().openOutputStream(uri);
+                 OutputStreamWriter writer = new OutputStreamWriter(outputStream)) {
+
+                // Nagłówki pliku CSV
+                writer.append("UID,Kwota,Kategoria,Data,Opis\n");
+
+                // Dane transakcji
+                for (TransakcjaEntity transakcja : transakcje) {
+                    writer.append(String.valueOf(transakcja.getUid())).append(",")
+                            .append(transakcja.getKwota()).append(",")
+                            .append(transakcja.getKategoria()).append(",")
+                            .append(transakcja.getData().toString()).append(",")
+                            .append(transakcja.getOpis()).append("\n");
+                }
+
+                writer.flush();
+                Toast.makeText(requireContext(), "Plik CSV został zapisany w Documents: " + fileName, Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(requireContext(), "Błąd podczas zapisywania pliku CSV", Toast.LENGTH_SHORT).show();
         }
     }
 

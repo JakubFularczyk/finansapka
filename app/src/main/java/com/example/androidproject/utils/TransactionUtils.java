@@ -1,9 +1,12 @@
-package com.example.androidproject.baza;
+package com.example.androidproject.utils;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class TransactionUtils {
+
+    public static final List<String> OPTIONS = List.of("Dzienna", "Tygodniowa", "Miesięczna", "Roczna");
 
     /**
      * Calculates the next date based on the current date and interval.
@@ -18,7 +21,7 @@ public class TransactionUtils {
 
         switch (interval) {
             case "Dzienna":
-                calendar.add(Calendar.SECOND, 1);
+                calendar.add(Calendar.DAY_OF_YEAR, 1);
                 break;
             case "Tygodniowa":
                 calendar.add(Calendar.WEEK_OF_YEAR, 1);

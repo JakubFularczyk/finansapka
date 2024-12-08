@@ -42,5 +42,21 @@
     <string name="dodaj_nowa_kategorie">Dodaj nową kategorie</string>
     <string name="historia_transakcji">Historia transakcji</string>
     <string name="kategorie">Kategorie</string>
+    <string name="analiza_budzetu">Analiza budżetu</string>
+    <string name="witaj_w_finansapka">Witaj w finansApka</string>
+    <string name="importuj_baze_danych">Importuj bazę danych</string>
+    <string name="ikona_importu_bazy_danych">ikona importu bazy danych</string>
+    <string name="eksportuj_baze_danych">Eksportuj bazę danych</string>
+
+    <string-array name="security_questions">
+        <item>Jakie jest imię twojego pierwszego zwierzaka?</item>
+        <item>Jak nazywała się twoja pierwsza szkoła?</item>
+        <item>Jaki jest twój ulubiony kolor?</item>
+        <item>Jakie jest nazwisko twojego najlepszego przyjaciela z dzieciństwa?</item>
+        <item>Jak nazywało się twoje pierwsze miejsce pracy?</item>
+        <item>Jaka jest ulubiona potrawa twojej mamy?</item>
+        <item>Jaka jest twoja ulubiona książka?</item>
+        <item>Jakiej marki było twoje pierwsze auto?</item>
+    </string-array>
 
 </resources>

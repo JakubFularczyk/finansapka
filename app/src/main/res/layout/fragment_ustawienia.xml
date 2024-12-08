@@ -4,7 +4,6 @@
     android:padding="16dp"
     android:background="@drawable/background_light">
 
-
     <TextView
         android:id="@+id/ustawieniaText"
         android:layout_width="match_parent"
@@ -27,7 +26,7 @@
         android:src="@drawable/ic_close"
         android:contentDescription="@string/powrot_do_menu" />
 
-
+    <!-- Kontener: Limity Kategorii -->
     <FrameLayout
         android:id="@+id/limityKategoriiContainer"
         android:layout_width="match_parent"
@@ -35,41 +34,35 @@
         android:layout_below="@id/ustawieniaText"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/frame_with_border"
-        android:padding="8dp">
-
+        android:padding="6dp">
 
         <ImageView
             android:id="@+id/wyswietlIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_limits"
             android:contentDescription="@string/ikona_przejscia_dalej" />
-
 
         <TextView
             android:id="@+id/wyswietlText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/google_sans_regular"
             android:gravity="center"
             android:text="@string/limity_kategorii"
             android:textColor="#757575"
-            android:textSize="18sp"
-            android:singleLine="true"
-            android:ellipsize="none"
-            android:padding="5dp" />
-
+            android:textSize="16sp"
+            android:padding="4dp" />
 
         <Button
             android:id="@+id/limityKategoriiButton"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="60dp"
             android:background="@android:color/transparent"
             android:clickable="true"
             android:focusable="true" />
@@ -77,71 +70,107 @@
 
 
 
-
-
-
-
     <FrameLayout
-        android:id="@+id/zmianaMotywuContainer"
+        android:id="@+id/importBazyContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/limityKategoriiContainer"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/frame_with_border"
-        android:padding="8dp">
+        android:padding="6dp">
 
         <ImageView
-            android:id="@+id/zmianaMotywuIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:id="@+id/importBazyIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_theme"
-            android:contentDescription="@string/ikona_zmiany_motywu" />
+            android:src="@drawable/ic_import"
+            android:contentDescription="@string/ikona_importu_bazy_danych" />
 
         <TextView
-            android:id="@+id/zmianaMotywuText"
+            android:id="@+id/importBazyDanychText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/google_sans_regular"
             android:gravity="center"
-            android:text="@string/zmiana_motywu"
+            android:text="@string/importuj_baze_danych"
             android:textColor="#757575"
-            android:textSize="18sp"
-            android:singleLine="true"
-            android:ellipsize="none"
-            android:padding="5dp" />
+            android:textSize="16sp"
+            android:padding="4dp" />
 
         <Button
-            android:id="@+id/zmianaMotywuButton"
+            android:id="@+id/importBazyDanychButton"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="60dp"
             android:background="@android:color/transparent"
             android:clickable="true"
             android:focusable="true" />
     </FrameLayout>
 
+    <FrameLayout
+        android:id="@+id/eksportBazyContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/importBazyContainer"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/frame_with_border"
+        android:padding="6dp">
+
+        <ImageView
+            android:id="@+id/eksportBazyIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_export"
+            android:contentDescription="@string/ikona_zmiany_kodu_pin" />
+
+        <TextView
+            android:id="@+id/eksportBazyText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/google_sans_regular"
+            android:gravity="center"
+            android:text="@string/eksportuj_baze_danych"
+            android:textColor="#757575"
+            android:textSize="16sp"
+            android:padding="4dp" />
+
+        <Button
+            android:id="@+id/eksportBazyButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true" />
+    </FrameLayout>
+
+
+    <!-- Zmiana Kodu PIN -->
     <!-- Zmiana Kodu PIN -->
     <FrameLayout
         android:id="@+id/zmianaKoduPinContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/zmianaMotywuContainer"
+        android:layout_below="@id/eksportBazyContainer"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/frame_with_border"
-        android:padding="8dp">
+        android:padding="6dp">
 
         <ImageView
             android:id="@+id/zmianaKoduPinIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_pin"
             android:contentDescription="@string/ikona_zmiany_kodu_pin" />
@@ -151,20 +180,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/google_sans_regular"
             android:gravity="center"
             android:text="@string/zmiana_kodu_pin"
             android:textColor="#757575"
-            android:textSize="18sp"
-            android:singleLine="true"
-            android:ellipsize="none"
-            android:padding="5dp" />
+            android:textSize="16sp"
+            android:padding="4dp" />
 
         <Button
             android:id="@+id/zmianaKoduPinButton"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="60dp"
             android:background="@android:color/transparent"
             android:clickable="true"
             android:focusable="true" />
@@ -178,15 +205,15 @@
         android:layout_below="@id/zmianaKoduPinContainer"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/frame_with_border"
-        android:padding="8dp">
+        android:padding="6dp">
 
         <ImageView
             android:id="@+id/usunKontoIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_delete"
             android:contentDescription="@string/ikona_usuniecia_konta" />
@@ -196,22 +223,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/google_sans_regular"
             android:gravity="center"
             android:text="@string/usu_konto"
             android:textColor="#757575"
-            android:textSize="18sp"
-            android:singleLine="true"
-            android:ellipsize="none"
-            android:padding="5dp" />
+            android:textSize="16sp"
+            android:padding="4dp" />
 
         <Button
             android:id="@+id/usunKontoButton"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="60dp"
             android:background="@android:color/transparent"
             android:clickable="true"
             android:focusable="true" />
     </FrameLayout>
+
 </RelativeLayout>

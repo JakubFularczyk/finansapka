@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,9 @@ import android.widget.Toast;
 import com.example.androidproject.R;
 import com.example.androidproject.baza.BazaDanych;
 import com.example.androidproject.adaptery.TransakcjeEkranGlownyAdapter;
-import com.example.androidproject.baza.TransactionUtils;
+import com.example.androidproject.transakcje.dao.UserDAO;
+import com.example.androidproject.transakcje.encje.UserEntity;
+import com.example.androidproject.utils.TransactionUtils;
 import com.example.androidproject.transakcje.dao.KategoriaDAO;
 import com.example.androidproject.transakcje.dao.TransakcjaDAO;
 import com.example.androidproject.transakcje.encje.KategoriaEntity;
@@ -29,7 +32,6 @@ import com.example.androidproject.transakcje.encje.TransakcjaCyklicznaEntity;
 import com.example.androidproject.transakcje.encje.TransakcjaEntity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -80,6 +82,7 @@ public class MainFragment extends Fragment {
         }
 
         notificationBadge.setVisibility(hasLimitNotification ? View.VISIBLE : View.GONE);
+        notificationBadge.setVisibility(hasLimitNotification ? View.VISIBLE : View.GONE);
     }
 
     private void initializeViews(@NonNull View view) {
@@ -104,10 +107,13 @@ public class MainFragment extends Fragment {
             navController.navigate(actionId);
         });
     }
-
     private void loadUserData() {
-        String username = "Jan";
+        String username = capitalizeFirstLetter(((MainActivity) requireActivity()).getDb().userDAO().findById(1).getName());
         welcomeTextView.setText("Witaj, " + username);
+    }
+
+    private String capitalizeFirstLetter(String name) {
+        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
     }
 
     private void loadBalanceData(@NonNull View view) {
@@ -207,19 +213,24 @@ public class MainFragment extends Fragment {
         // Sprawdzanie transakcji cyklicznych
         for (TransakcjaCyklicznaEntity recurring : recurringTransactions) {
             Date today = new Date();
-            if (recurring.getDataOd().before(today) || recurring.getDataOd().equals(today)) {
+            Log.d("MainFragment", "today: " + today);
+            Date nextTransactionDate = recurring.getDataOd();
+            String interval = recurring.getInterwal();
+            Date updatedNextDate = TransactionUtils.calculateNextDate(nextTransactionDate, interval);
+            Log.d("MainFragment", "updatedNextDate: " + updatedNextDate);
+            if (updatedNextDate.before(today) || updatedNextDate.equals(today)) {
                 hasRecurringNotification = true;
                 TransakcjaEntity linkedTransaction = db.transakcjaDAO().getTransactionByUid(recurring.getIdTransakcji());
                 if (linkedTransaction != null) {
                     subscriptionNotificationTextView.setText("Czy transakcja cykliczna " + linkedTransaction.getOpis() + " została wykonana?");
                     takButton.setOnClickListener(v -> {
-                        addTransactionFromRecurring(linkedTransaction);
-                        updateNextRecurringDate(recurring);
+                        addTransactionFromRecurring(linkedTransaction, recurring, updatedNextDate);
+                        //updateNextRecurringDate(recurring);
                         bottomSheetDialog.dismiss();
                         loadBalanceData(requireView());
                     });
                     nieButton.setOnClickListener(v -> {
-                        updateNextRecurringDate(recurring);
+                        updateNextRecurringDate(recurring, updatedNextDate);
                         bottomSheetDialog.dismiss();
                     });
                     zmienDateButton.setOnClickListener(v -> {
@@ -246,25 +257,39 @@ public class MainFragment extends Fragment {
             subscriptionNotificationFrame.setVisibility(View.GONE);
         }
 
+        if (!hasLimitNotification && !hasRecurringNotification) {
+            notificationBadge.setVisibility(View.GONE);
+        }
+
         // Wyświetlenie dialogu
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
     }
-    private void addTransactionFromRecurring(TransakcjaEntity transaction) {
+    private void addTransactionFromRecurring(TransakcjaEntity transaction, TransakcjaCyklicznaEntity recurringTransaction, Date updatedNextDate) {
         MainActivity mainActivity = (MainActivity) getActivity();
         BazaDanych db = mainActivity.getDb();
         TransakcjaDAO transakcjaDAO = db.transakcjaDAO();
+
+        /*Date nextTransactionDate = recurringTransaction.getDataOd();
+
+        String interval = recurringTransaction.getInterwal();
+        Date updatedNextDate = TransactionUtils.calculateNextDate(nextTransactionDate, interval);*/
 
         // Tworzenie nowej transakcji
         TransakcjaEntity newTransaction = new TransakcjaEntity();
         newTransaction.setKwota(transaction.getKwota());
         newTransaction.setKategoria(transaction.getKategoria());
         newTransaction.setOpis(transaction.getOpis());
-        newTransaction.setData(new Date());// Dzisiejsza data
+        newTransaction.setData(updatedNextDate); // nowa najblizsza data (po poprzedniej)
         newTransaction.setCyclicChild(true);
+        newTransaction.setParentTransactionId(transaction.getUid());
 
         // Wstawienie transakcji
         transakcjaDAO.insert(newTransaction);
+
+        // Zapisz kolejną datę w recurringTransaction
+        recurringTransaction.setDataOd(updatedNextDate);
+        db.transakcjaCyklicznaDAO().update(recurringTransaction);
 
         KategoriaDAO kategoriaDAO = db.kategoriaDAO();
         KategoriaEntity kategoria = kategoriaDAO.findByName(transaction.getKategoria());
@@ -275,7 +300,7 @@ public class MainFragment extends Fragment {
 
         // Powiadomienie użytkownika
         Toast.makeText(requireContext(), "Dodano transakcję cykliczną!", Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(requireContext(), "Data kolejnej transakcji cyklicznej: " + updatedNextDate, Toast.LENGTH_SHORT).show();
         // Odświeżenie listy transakcji
         refreshTransactionList();
 
@@ -297,16 +322,16 @@ public class MainFragment extends Fragment {
         transactionListView.setAdapter(adapter);
     }
 
-    private void updateNextRecurringDate(TransakcjaCyklicznaEntity recurringTransaction) {
-        String interval = recurringTransaction.getInterwal();
-        Date nextDate = TransactionUtils.calculateNextDate(recurringTransaction.getDataOd(), interval);
+    private void updateNextRecurringDate(TransakcjaCyklicznaEntity recurringTransaction, Date updatedNextDate) {
+        /*String interval = recurringTransaction.getInterwal();
+        Date nextDate = TransactionUtils.calculateNextDate(recurringTransaction.getDataOd(), interval);*/
 
-        recurringTransaction.setDataOd(nextDate);
+        recurringTransaction.setDataOd(updatedNextDate);
         MainActivity mainActivity = (MainActivity) getActivity();
         BazaDanych db = mainActivity.getDb();
         db.transakcjaCyklicznaDAO().update(recurringTransaction);
 
-        Toast.makeText(requireContext(), "Data kolejnej transakcji cyklicznej: " + nextDate, Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), "Data kolejnej transakcji cyklicznej: " + updatedNextDate, Toast.LENGTH_SHORT).show();
     }
 
     private void showDatePickerToReschedule(TransakcjaCyklicznaEntity recurringTransaction) {

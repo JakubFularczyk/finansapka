@@ -19,19 +19,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="48dp" />
 
-    <!-- Ikona menu w lewym górnym rogu -->
-    <ImageView
-        android:id="@+id/menuButton"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_menu"
-        android:contentDescription="Menu"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:focusable="true" />
-
     <!-- Lista statystyk -->
     <ListView
         android:id="@+id/statsListView"

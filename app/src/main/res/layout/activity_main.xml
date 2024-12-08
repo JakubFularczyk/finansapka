@@ -7,11 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".stronaglowna.MainActivity">
 
+    <!-- NavHostFragment obsługujący nawigację -->
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/homeScreenFragmentContainerView"
+        android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/main_nav_graph" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:navGraph="@navigation/main_nav_graph"
+        app:defaultNavHost="true" />
 </RelativeLayout>

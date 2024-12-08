@@ -62,6 +62,9 @@
         <action
             android:id="@+id/action_analizaFinansowFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_analizaFinansowFragment_to_fragmentWykresyAnalizyFinansowej"
+            app:destination="@id/fragmentWykresyAnalizyFinansowej" />
     </fragment>
     <fragment
         android:id="@+id/edycjaTransakcjiFragment"
@@ -84,6 +87,9 @@
         <action
             android:id="@+id/action_ustawieniaFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_ustawieniaFragment_to_rejestracjaFragment"
+            app:destination="@id/rejestracjaFragment" />
     </fragment>
     <fragment
         android:id="@+id/historiaLimitowKategoriiFragment"
@@ -111,7 +117,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentWykresyAnalizyFinansowej"
-        android:name="com.example.androidproject.FragmentWykresyAnalizyFinansowej"
+        android:name="com.example.androidproject.analiza.FragmentWykresyAnalizyFinansowej"
         android:label="fragment_wykresy_analizy_finansowej"
         tools:layout="@layout/fragment_wykresy_analizy_finansowej" >
         <action
@@ -120,5 +126,35 @@
         <action
             android:id="@+id/action_fragmentWykresyAnalizyFinansowej_to_mainFragment"
             app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rejestracjaFragment"
+        android:name="com.example.androidproject.RejestracjaFragment"
+        android:label="RejestracjaFragment" >
+        <action
+            android:id="@+id/action_rejestracjaFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/logowanieFragment"
+        android:name="com.example.androidproject.LogowanieFragment"
+        android:label="LogowanieFragment" >
+        <action
+            android:id="@+id/action_logowanieFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_logowanieFragment_to_zapomnianeHasloFragment"
+            app:destination="@id/zapomnianeHasloFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/zapomnianeHasloFragment"
+        android:name="com.example.androidproject.ZapomnianeHasloFragment"
+        android:label="ZapomnianeHasloFragment" >
+        <action
+            android:id="@+id/action_zapomnianeHasloFragment_to_rejestracjaFragment"
+            app:destination="@id/rejestracjaFragment" />
+        <action
+            android:id="@+id/action_zapomnianeHasloFragment_to_ustawieniaFragment"
+            app:destination="@id/ustawieniaFragment" />
     </fragment>
 </navigation>

@@ -3,11 +3,16 @@ package com.example.androidproject.stronaglowna;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.room.Room;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.androidproject.R;
 import com.example.androidproject.baza.BazaDanych;
 import com.example.androidproject.transakcje.dao.KategoriaDAO;
+import com.example.androidproject.transakcje.dao.UserDAO;
 import com.example.androidproject.transakcje.encje.KategoriaEntity;
 
 import java.util.List;
@@ -23,12 +28,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = Room.databaseBuilder(getApplicationContext(),
-                BazaDanych.class, "baza_danych")
+                        BazaDanych.class, "baza_danych")
                 .allowMainThreadQueries()
                 .build();
 
-        addCategories("Wydatki", "Przychody", "Inwestycje", "Premie i nagrody", "Wynagrodzenie", "Rozrywka", "Subskrypcje", "Ubrania", "Podróże","Edukacja");
+        // Sprawdzenie użytkownika i nawigacja
+        checkUserAndNavigate();
+        addCategories("Wydatki", "Przychody", "Inwestycje", "Wynagrodzenie", "Rozrywka", "Subskrypcje", "Ubrania", "Podróże");
     }
+
+    private void checkUserAndNavigate() {
+        UserDAO userDAO = db.userDAO();
+        int userCount = userDAO.getUserCount();
+
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment);
+        NavController navController = navHostFragment.getNavController();
+
+        if (userCount == 0) {
+            // Brak użytkownika → przejście do RejestracjaFragment
+            navController.navigate(R.id.rejestracjaFragment);
+        } else {
+            // Użytkownik istnieje → przejście do LogowanieFragment
+            navController.navigate(R.id.logowanieFragment);
+        }
+    }
+
 
     public List<KategoriaEntity> getCategories() {
         KategoriaDAO kategoriaDAO = db.kategoriaDAO();
@@ -59,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         kategoria.setNazwa(nazwa);
         return kategoria;
     }
-
 
 
     public BazaDanych getDb() {
