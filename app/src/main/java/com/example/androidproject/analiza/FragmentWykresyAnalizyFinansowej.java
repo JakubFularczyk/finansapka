@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,10 +13,10 @@ import androidx.fragment.app.Fragment;
 import com.example.androidproject.R;
 import com.example.androidproject.baza.BazaDanych;
 import com.example.androidproject.customviews.CustomSwitch;
-import com.example.androidproject.transakcje.dao.TransakcjaDAO;
-import com.example.androidproject.transakcje.dto.KategoriaSum;
+import com.example.androidproject.baza.dao.TransakcjaDAO;
+import com.example.androidproject.utils.dto.KategoriaSum;
 import com.example.androidproject.stronaglowna.MainActivity;
-import com.example.androidproject.transakcje.dto.MonthSum;
+import com.example.androidproject.utils.dto.MonthSum;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -104,7 +103,7 @@ public class FragmentWykresyAnalizyFinansowej extends Fragment {
         // Tworzenie BarDataSet
         BarDataSet dataSet = new BarDataSet(entries, "");
         int startColor = isIncome ? Color.GREEN : Color.RED; // Zielony dla przychodów, czerwony dla wydatków
-        int endColor = Color.WHITE; // Gradient kończy się białym
+        int endColor = isIncome ? Color.parseColor("#A5D6A7") : Color.parseColor("#EF9A9A"); // Jasne kolory zamiast białego
         dataSet.setGradientColor(startColor, endColor); // Gradient
         dataSet.setValueTextColor(Color.BLACK);
         dataSet.setValueTextSize(14f); // Większy rozmiar wartości

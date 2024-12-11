@@ -20,16 +20,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.androidproject.R;
-import com.example.androidproject.baza.BazaDanych;
 import com.example.androidproject.utils.TransactionUtils;
 import com.example.androidproject.customviews.CustomSwitch;
 import com.example.androidproject.stronaglowna.MainActivity;
-import com.example.androidproject.transakcje.dao.KategoriaDAO;
-import com.example.androidproject.transakcje.dao.TransakcjaCyklicznaDAO;
-import com.example.androidproject.transakcje.dao.TransakcjaDAO;
-import com.example.androidproject.transakcje.encje.KategoriaEntity;
-import com.example.androidproject.transakcje.encje.TransakcjaEntity;
-import com.example.androidproject.transakcje.service.TransakcjeService;
+import com.example.androidproject.baza.encje.KategoriaEntity;
+import com.example.androidproject.service.TransactionsService;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -46,11 +41,11 @@ public class DodajTransakcjeFragment extends Fragment {
     private TextView datePickerText;
     private boolean isIncome = true;
     private CheckBox cyclicPaymentCheckbox;
-    private TransakcjeService transakcjeService;
+    private TransactionsService transactionsService;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        transakcjeService = new TransakcjeService((MainActivity) getActivity());
+        transactionsService = new TransactionsService((MainActivity) requireActivity());
         return inflater.inflate(R.layout.fragment_dodaj_transakcje, container, false);
     }
 
@@ -142,87 +137,33 @@ public class DodajTransakcjeFragment extends Fragment {
     }
 
     private void addTransaction() {
-        String kwotaTekst = kwotaInput.getText().toString().trim();
-        if (kwotaTekst.isEmpty()) {
-            Toast.makeText(requireContext(), "Proszę podać kwotę", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         try {
-            double kwota = Double.parseDouble(kwotaTekst);
-            if (!isIncome) kwota = -kwota;
-
-            TransakcjaEntity encja = prepareTransactionEntity(
-                    String.valueOf(kwota),
+            transactionsService.addTransaction(
+                    kwotaInput.getText().toString().trim(),
+                    isIncome,
                     kategoriaSpinner.getSelectedItem().toString(),
                     opisInput.getText().toString(),
-                    localCalendar.getTime()
+                    localCalendar.getTime(),
+                    cyclicPaymentCheckbox.isChecked(),
+                    okresRozliczeniowySpinner.getSelectedItem() != null
+                            ? okresRozliczeniowySpinner.getSelectedItem().toString()
+                            : null
             );
 
-            encja.setParentTransactionId(null);
-            encja.setCyclicChild(false);
-
-            TransakcjaDAO transakcjaDAO = getTransakcjaDao();
-            long transactionId = transakcjaDAO.insert(encja);
-            encja.setUid((int) transactionId);
-
-            if (cyclicPaymentCheckbox.isChecked()) {
-                String interval = okresRozliczeniowySpinner.getSelectedItem().toString();
-                Date startDate = localCalendar.getTime();
-                transakcjeService.handleRecurringTransaction(encja, interval, startDate);
-            }
-
-
-            if (kwota < 0) {
-                updateCategoryAfterTransaction(encja);
-            }
-
-
+            // Nawigacja po udanym dodaniu transakcji
             NavController navController = Navigation.findNavController(requireView());
             navController.navigate(R.id.action_dodajTransakcjeFragment_to_transakcjaDodanaFragment);
 
-        } catch (NumberFormatException e) {
-            Toast.makeText(requireContext(), "Nieprawidłowy format kwoty", Toast.LENGTH_SHORT).show();
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
-    private void updateCategoryAfterTransaction(TransakcjaEntity transakcja) {
-        transakcjeService.updateCategoryAfterTransaction(transakcja);
-    }
-
 
     private String formatDate(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("pl"));
         return sdf.format(date);
     }
 
-    private TransakcjaDAO getTransakcjaDao() {
-        MainActivity activity = (MainActivity) getActivity();
-        BazaDanych db = activity.getDb();
-        return db.transakcjaDAO();
-    }
-
-    private KategoriaDAO  getKategoriaDao() {
-        MainActivity activity = (MainActivity) getActivity();
-        BazaDanych db = activity.getDb();
-        return db.kategoriaDAO();
-    }
-    private TransakcjaCyklicznaDAO getRecurringTransactionDao() {
-        MainActivity activity = (MainActivity) getActivity();
-        BazaDanych db = activity.getDb();
-        return db.transakcjaCyklicznaDAO();
-    }
-
-    private TransakcjaEntity prepareTransactionEntity(String kwota, String kategoria, String opis, Date data) {
-        TransakcjaEntity transakcjaEntity = new TransakcjaEntity();
-        transakcjaEntity.setKwota(kwota);
-        transakcjaEntity.setKategoria(kategoria);
-        transakcjaEntity.setOpis(opis);
-        transakcjaEntity.setData(data);
-        return transakcjaEntity;
-    }
 
     private static void setupNavigationToMenu(@NonNull View view, int actionId) {
         ImageButton przejdzDoMenuButton = view.findViewById(R.id.przejdzDoMenuButton);

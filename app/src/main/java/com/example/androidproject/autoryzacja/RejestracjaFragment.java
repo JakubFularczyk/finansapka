@@ -1,4 +1,4 @@
-package com.example.androidproject;
+package com.example.androidproject.autoryzacja;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,8 +16,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.androidproject.transakcje.dao.UserDAO;
-import com.example.androidproject.transakcje.encje.UserEntity;
+import com.example.androidproject.R;
+import com.example.androidproject.baza.dao.UserDAO;
+import com.example.androidproject.baza.encje.UserEntity;
 import com.example.androidproject.stronaglowna.MainActivity;
 
 public class RejestracjaFragment extends Fragment {

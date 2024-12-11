@@ -1,4 +1,4 @@
-package com.example.androidproject.transakcje.encje;
+package com.example.androidproject.baza.encje;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;

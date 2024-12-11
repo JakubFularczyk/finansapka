@@ -1,6 +1,5 @@
 package com.example.androidproject.transakcje;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,40 +17,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidproject.R;
-import com.example.androidproject.baza.BazaDanych;
 import com.example.androidproject.utils.TransactionUtils;
 import com.example.androidproject.customviews.CustomSwitch;
 import com.example.androidproject.stronaglowna.MainActivity;
-import com.example.androidproject.transakcje.dao.KategoriaDAO;
-import com.example.androidproject.transakcje.dao.TransakcjaDAO;
-import com.example.androidproject.transakcje.encje.KategoriaEntity;
-import com.example.androidproject.transakcje.encje.TransakcjaCyklicznaEntity;
-import com.example.androidproject.transakcje.encje.TransakcjaEntity;
-import com.example.androidproject.transakcje.service.TransakcjeService;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import com.example.androidproject.baza.encje.TransakcjaEntity;
+import com.example.androidproject.service.TransactionsService;
+
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
+
 
 public class EdycjaTransakcjiFragment extends Fragment {
 
-    private Calendar localCalendar = Calendar.getInstance();
     private EditText kwotaInput, opisInput;
     private Spinner kategoriaSpinner, okresRozliczeniowySpinner;
     private TextView datePickerText;
     private CheckBox cyclicPaymentCheckbox;
     private CustomSwitch transactionTypeCustomSwitch;
     private int transactionUid;
-    private TransakcjeService transakcjeService;
+    private TransactionsService transactionsService;
     private boolean wasCyclic;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        transakcjeService = new TransakcjeService((MainActivity) getActivity());
+        transactionsService = new TransactionsService((MainActivity) requireActivity());
         return inflater.inflate(R.layout.fragment_edycja_transakcji, container, false);
     }
 
@@ -83,7 +72,6 @@ public class EdycjaTransakcjiFragment extends Fragment {
         ArrayAdapter<String> okresAdapter = new ArrayAdapter<>(
                 requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
-
                 TransactionUtils.OPTIONS
         );
         okresRozliczeniowySpinner.setAdapter(okresAdapter);
@@ -91,61 +79,38 @@ public class EdycjaTransakcjiFragment extends Fragment {
 
     private void loadArguments() {
         if (getArguments() != null) {
-            transactionUid = getArguments().getInt("uid");
-            String kwotaString = getArguments().getString("kwota");
-            String kategoria = getArguments().getString("kategoria");
-            Date data = (Date) getArguments().getSerializable("data");
-            String opis = getArguments().getString("opis");
-            wasCyclic = getArguments().getBoolean("cykliczna");
-
-            fillFields(kwotaString, kategoria, data, opis);
+            TransakcjaEntity transakcja = transactionsService.loadTransactionArguments(getArguments());
+            if (transakcja != null) {
+                transactionUid = transakcja.getUid();
+                wasCyclic = getArguments().getBoolean("cykliczna");
+                fillFields(
+                        transakcja.getKwota(),
+                        transakcja.getKategoria(),
+                        transakcja.getData(),
+                        transakcja.getOpis()
+                );
+            }
         }
     }
 
     private void fillFields(String kwotaString, String kategoria, Date data, String opis) {
-        datePickerText.setText(formatDate(data));
-        setTransactionType(kwotaString);
-        kwotaInput.setText(formatAmount(kwotaString));
+        datePickerText.setText(transactionsService.formatDate(data));
+        transactionTypeCustomSwitch.setChecked(transactionsService.determineTransactionType(kwotaString));
+        kwotaInput.setText(transactionsService.formatAmount(kwotaString));
         opisInput.setText(opis);
         initKategoriaSpinner(kategoria);
         cyclicPaymentCheckbox.setChecked(wasCyclic);
 
-        TransakcjaCyklicznaEntity recurringTransaction = transakcjeService.getRecurringTransaction(transactionUid);
-        if (recurringTransaction != null) {
-            String interwal = recurringTransaction.interwal;
-            okresRozliczeniowySpinner.setSelection(TransactionUtils.OPTIONS.indexOf(interwal));
-            okresRozliczeniowySpinner.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void setTransactionType(String kwotaString) {
-        double kwota = Double.parseDouble(kwotaString);
-        transactionTypeCustomSwitch.setChecked(kwota >= 0);
-    }
-
-    private String formatAmount(String kwotaString) {
-        return String.valueOf(Math.abs(Double.parseDouble(kwotaString)));
+        transactionsService.configureRecurringTransaction(transactionUid, cyclicPaymentCheckbox, okresRozliczeniowySpinner, requireContext());
     }
 
     private void initKategoriaSpinner(String selectedCategory) {
-        MainActivity activity = (MainActivity) getActivity();
-        if (activity != null) {
-            List<KategoriaEntity> categories = activity.getCategories();
-            List<String> categoriesNames = categories.stream() //
-                    .map(c -> c.getNazwa()) //
-                    .collect(Collectors.toList());
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
-                    android.R.layout.simple_spinner_item, categoriesNames);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            kategoriaSpinner.setAdapter(adapter);
-
-            if (selectedCategory != null) {
-                int position = categories.indexOf(selectedCategory);
-                if (position >= 0) {
-                    kategoriaSpinner.setSelection(position);
-                }
-            }
-        }
+        transactionsService.getCategoryAdapter(
+                (MainActivity) requireActivity(),
+                selectedCategory,
+                kategoriaSpinner,
+                requireContext()
+        );
     }
 
     private void setupListeners(View view) {
@@ -155,114 +120,38 @@ public class EdycjaTransakcjiFragment extends Fragment {
     }
 
     private void openDatePicker() {
-        Calendar calendar = Calendar.getInstance();
-        try {
-            Date currentDate = parseDateFromText(datePickerText.getText().toString());
-            if (currentDate != null) {
-                calendar.setTime(currentDate);
-            }
-        } catch (Exception ignored) {}
-
-        new DatePickerDialog(requireContext(),
-                (view, year, month, dayOfMonth) -> {
-                    Calendar selectedDate = Calendar.getInstance();
-                    selectedDate.set(year, month, dayOfMonth);
-                    datePickerText.setText(formatDate(selectedDate.getTime()));
-                },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-        ).show();
+        transactionsService.showDatePicker(
+                requireContext(),
+                datePickerText.getText().toString(),
+                datePickerText
+        );
     }
 
     private void saveChanges(View view) {
         String kwotaTekst = kwotaInput.getText().toString().trim();
         String newCategory = kategoriaSpinner.getSelectedItem().toString();
         String newDescription = opisInput.getText().toString();
-        Date newDate = parseDateFromText(datePickerText.getText().toString());
-
-        if (!validateInputs(kwotaTekst, newDate)) return;
+        Date newDate = transactionsService.parseDateFromText(datePickerText.getText().toString());
 
         try {
-            double amount = parseAmount(kwotaTekst);
-
-            TransakcjaEntity oldTransaction = getTransakcjaDao().getTransactionByUid(transactionUid);
-            TransakcjaEntity updatedTransaction = createUpdatedTransaction(amount, newCategory, newDescription, newDate);
-            updateCategoryCurrentAmount(oldTransaction, updatedTransaction);
-            getTransakcjaDao().update(updatedTransaction);
-
-            if (cyclicPaymentCheckbox.isChecked()) {
-                String interval = okresRozliczeniowySpinner.getSelectedItem().toString();
-                Date startDate = localCalendar.getTime();
-                transakcjeService.handleRecurringTransaction(updatedTransaction, interval, startDate);
-            } else {
-                if (wasCyclic) {
-                    transakcjeService.removeRecurringTransaction(updatedTransaction);
-                }
-            }
+            transactionsService.saveTransactionChanges(
+                    transactionUid,
+                    kwotaTekst,
+                    newCategory,
+                    newDescription,
+                    newDate,
+                    transactionTypeCustomSwitch.isChecked(),
+                    wasCyclic,
+                    cyclicPaymentCheckbox.isChecked(),
+                    okresRozliczeniowySpinner.getSelectedItem() != null
+                            ? okresRozliczeniowySpinner.getSelectedItem().toString()
+                            : null
+            );
 
             navigateToHistory(view);
-        } catch (NumberFormatException e) {
-            Toast.makeText(requireContext(), "Nieprawidłowy format kwoty", Toast.LENGTH_SHORT).show();
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void updateCategoryCurrentAmount(TransakcjaEntity oldTransaction, TransakcjaEntity updatedTransaction) {
-        KategoriaDAO kategoriaDAO = getKategoriaDao();
-
-        KategoriaEntity category = kategoriaDAO.findByName(oldTransaction.getKategoria());
-
-        if (category != null && category.getLimit() != null && !category.getLimit().isEmpty()) {
-            double aktualnaKwota = category.aktualnaKwota;
-
-            // Odejmij starą kwotę od aktualnaKwota (jeśli to wydatek)
-            if (Double.parseDouble(oldTransaction.getKwota()) < 0) {
-                aktualnaKwota += Math.abs(Double.parseDouble(oldTransaction.getKwota()));
-            }
-
-            // Dodaj nową kwotę do aktualnaKwota (jeśli to wydatek)
-            if (Double.parseDouble(updatedTransaction.getKwota()) < 0) {
-                aktualnaKwota -= Math.abs(Double.parseDouble(updatedTransaction.getKwota()));
-            }
-
-            // Zapisz nową aktualną kwotę w kategorii
-            category.aktualnaKwota = aktualnaKwota;
-
-            // Zaktualizuj kategorię w bazie danych
-            kategoriaDAO.update(category);
-        }
-    }
-
-    private boolean validateInputs(String amountText, Date date) {
-        if (date == null) {
-            Toast.makeText(requireContext(), "Nieprawidłowa data", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (amountText.isEmpty()) {
-            Toast.makeText(requireContext(), "Proszę podać kwotę", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        return true;
-    }
-
-    private double parseAmount(String amountText) {
-        double amount = Double.parseDouble(amountText);
-        if (!transactionTypeCustomSwitch.isChecked()) {
-            amount = -amount;
-        }
-        return amount;
-    }
-
-    private TransakcjaEntity createUpdatedTransaction(double amount, String category, String description, Date date) {
-        TransakcjaEntity updatedTransaction = new TransakcjaEntity();
-        updatedTransaction.setUid(transactionUid);
-        updatedTransaction.setKwota(String.valueOf(amount));
-        updatedTransaction.setKategoria(category);
-        updatedTransaction.setData(date);
-        updatedTransaction.setOpis(description);
-        return updatedTransaction;
     }
 
     private void navigateToHistory(View view) {
@@ -274,29 +163,5 @@ public class EdycjaTransakcjiFragment extends Fragment {
         navigateToHistory(view);
     }
 
-    private Date parseDateFromText(String dateText) {
-        SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy", new Locale("pl"));
-        try {
-            return format.parse(dateText);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
-    private String formatDate(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy", new Locale("pl"));
-        return format.format(date);
-    }
-
-    private TransakcjaDAO getTransakcjaDao() {
-        MainActivity activity = (MainActivity) getActivity();
-        BazaDanych db = activity.getDb();
-        return db.transakcjaDAO();
-    }
-    private KategoriaDAO getKategoriaDao() {
-        MainActivity activity = (MainActivity) getActivity();
-        BazaDanych db = activity.getDb();
-        return db.kategoriaDAO();
-    }
 }

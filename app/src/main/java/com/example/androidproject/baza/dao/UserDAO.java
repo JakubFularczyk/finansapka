@@ -1,10 +1,10 @@
-package com.example.androidproject.transakcje.dao;
+package com.example.androidproject.baza.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.androidproject.transakcje.encje.UserEntity;
+import com.example.androidproject.baza.encje.UserEntity;
 
 @Dao
 public interface UserDAO {

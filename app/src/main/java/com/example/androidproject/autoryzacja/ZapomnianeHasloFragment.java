@@ -1,4 +1,4 @@
-package com.example.androidproject;
+package com.example.androidproject.autoryzacja;
 
 import android.os.Bundle;
 
@@ -17,13 +17,14 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.androidproject.R;
 import com.example.androidproject.baza.BazaDanych;
 import com.example.androidproject.stronaglowna.MainActivity;
-import com.example.androidproject.transakcje.dao.KategoriaDAO;
-import com.example.androidproject.transakcje.dao.TransakcjaCyklicznaDAO;
-import com.example.androidproject.transakcje.dao.TransakcjaDAO;
-import com.example.androidproject.transakcje.dao.UserDAO;
-import com.example.androidproject.transakcje.encje.UserEntity;
+import com.example.androidproject.baza.dao.KategoriaDAO;
+import com.example.androidproject.baza.dao.TransakcjaCyklicznaDAO;
+import com.example.androidproject.baza.dao.TransakcjaDAO;
+import com.example.androidproject.baza.dao.UserDAO;
+import com.example.androidproject.baza.encje.UserEntity;
 
 
 public class ZapomnianeHasloFragment extends Fragment {

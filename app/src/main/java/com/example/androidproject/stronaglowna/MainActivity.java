@@ -4,16 +4,14 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.room.Room;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.androidproject.R;
 import com.example.androidproject.baza.BazaDanych;
-import com.example.androidproject.transakcje.dao.KategoriaDAO;
-import com.example.androidproject.transakcje.dao.UserDAO;
-import com.example.androidproject.transakcje.encje.KategoriaEntity;
+import com.example.androidproject.baza.dao.KategoriaDAO;
+import com.example.androidproject.baza.dao.UserDAO;
+import com.example.androidproject.baza.encje.KategoriaEntity;
 
 import java.util.List;
 import java.util.Objects;
@@ -43,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
+        assert navHostFragment != null;
         NavController navController = navHostFragment.getNavController();
 
         if (userCount == 0) {

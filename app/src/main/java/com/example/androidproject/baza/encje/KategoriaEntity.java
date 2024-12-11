@@ -1,4 +1,4 @@
-package com.example.androidproject.transakcje.encje;
+package com.example.androidproject.baza.encje;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -25,8 +25,8 @@ public class KategoriaEntity {
         return uid;
     }
 
-    public double getAktualnaKwota() {
-        return aktualnaKwota;
+    public Double getAktualnaKwota() {
+        return aktualnaKwota != null ? aktualnaKwota : 0.0;
     }
 
     public void setUid(int uid) {

@@ -16,14 +16,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.androidproject.R;
-import com.example.androidproject.baza.BazaDanych;
 import com.example.androidproject.stronaglowna.MainActivity;
-import com.example.androidproject.transakcje.dao.KategoriaDAO;
-import com.example.androidproject.transakcje.dao.TransakcjaCyklicznaDAO;
-import com.example.androidproject.transakcje.dao.TransakcjaDAO;
-import com.example.androidproject.transakcje.encje.KategoriaEntity;
-import com.example.androidproject.transakcje.encje.TransakcjaEntity;
-import com.example.androidproject.transakcje.service.TransakcjeService;
+import com.example.androidproject.baza.dao.KategoriaDAO;
+import com.example.androidproject.baza.dao.TransakcjaCyklicznaDAO;
+import com.example.androidproject.baza.dao.TransakcjaDAO;
+import com.example.androidproject.baza.encje.KategoriaEntity;
+import com.example.androidproject.baza.encje.TransakcjaEntity;
+import com.example.androidproject.service.TransactionsService;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -31,13 +30,13 @@ import java.util.Locale;
 
 public class HistoriaTransakcjiAdapter extends BaseAdapter {
 
-    private TransakcjeService transakcjeService;
+    private TransactionsService transactionsService;
     private final Context context;
     private final List<TransakcjaEntity> transactions;
 
     public HistoriaTransakcjiAdapter(Context context, Activity activity, List<TransakcjaEntity> transactions) {
         this.context = context;
-        this.transakcjeService = new TransakcjeService((MainActivity) activity);
+        this.transactionsService = new TransactionsService((MainActivity) activity);
         this.transactions = transactions;
     }
 
@@ -199,7 +198,7 @@ public class HistoriaTransakcjiAdapter extends BaseAdapter {
         bundle.putString("kategoria", transaction.getKategoria());
         bundle.putSerializable("data", transaction.getData());
         bundle.putString("opis", transaction.getOpis());
-        bundle.putBoolean("cykliczna", transakcjeService.isRecurring(transaction));
+        bundle.putBoolean("cykliczna", transactionsService.isRecurring(transaction));
 
         NavController navController = Navigation.findNavController(view);
         navController.navigate(R.id.action_historiaTransakcjiFragment_to_edycjaTransakcjiFragment, bundle);
@@ -213,7 +212,10 @@ public class HistoriaTransakcjiAdapter extends BaseAdapter {
         if (category != null && category.getLimit() != null && !category.getLimit().isEmpty()) {
             double transactionAmount = Double.parseDouble(transaction.getKwota());
             if (transactionAmount < 0) {
-                category.aktualnaKwota += Math.abs(transactionAmount); //TODO TUTAJ MOZE I W EDYCJI BEDZIE TRZEBA ZMIENAIC PLUS I MINUS
+                if (category.aktualnaKwota == null) {
+                    category.aktualnaKwota = 0.0;
+                }
+                category.aktualnaKwota += Math.abs(transactionAmount);
             }
 
 
@@ -225,6 +227,7 @@ public class HistoriaTransakcjiAdapter extends BaseAdapter {
         notifyDataSetChanged();
         Toast.makeText(context, "Transakcja usunięta", Toast.LENGTH_SHORT).show();
     }
+
 
 
 }

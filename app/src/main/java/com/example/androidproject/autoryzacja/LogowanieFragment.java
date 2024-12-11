@@ -1,4 +1,4 @@
-package com.example.androidproject;
+package com.example.androidproject.autoryzacja;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,8 +18,8 @@ import androidx.navigation.Navigation;
 import com.example.androidproject.R;
 import com.example.androidproject.baza.BazaDanych;
 import com.example.androidproject.stronaglowna.MainActivity;
-import com.example.androidproject.transakcje.dao.UserDAO;
-import com.example.androidproject.transakcje.encje.UserEntity;
+import com.example.androidproject.baza.dao.UserDAO;
+import com.example.androidproject.baza.encje.UserEntity;
 
 public class LogowanieFragment extends Fragment {
 

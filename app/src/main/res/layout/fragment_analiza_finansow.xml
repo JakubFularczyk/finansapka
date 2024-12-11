@@ -11,13 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/analiza_finansowa"
-        android:textSize="32sp"
+        android:textSize="42sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:fontFamily="@font/googlesans_bold"
         android:layout_alignParentTop="true"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="48dp" />
+         />
 
     <!-- Lista statystyk -->
     <ListView
@@ -31,7 +31,7 @@
         android:paddingStart="36dp"
         android:paddingEnd="36dp"
         android:paddingTop="28dp"
-        android:paddingBottom="28dp" />
+         />
     <TextView
         android:id="@+id/dodajTransakcjeText"
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
+
         android:background="@drawable/frame_with_only_top_border"
         android:orientation="horizontal"
         android:padding="8dp"

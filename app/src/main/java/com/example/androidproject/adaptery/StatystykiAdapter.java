@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.androidproject.R;
-import com.example.androidproject.analiza.Statystyka;
+import com.example.androidproject.utils.dto.Statystyka;
 
 import java.util.List;
 

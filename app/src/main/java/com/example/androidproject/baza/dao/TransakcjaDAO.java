@@ -1,4 +1,4 @@
-package com.example.androidproject.transakcje.dao;
+package com.example.androidproject.baza.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -6,12 +6,11 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.androidproject.transakcje.dto.KategoriaSum;
-import com.example.androidproject.transakcje.dto.MonthSum;
-import com.example.androidproject.transakcje.encje.TransakcjaEntity;
+import com.example.androidproject.utils.dto.KategoriaSum;
+import com.example.androidproject.utils.dto.MonthSum;
+import com.example.androidproject.baza.encje.TransakcjaEntity;
 
 import java.util.List;
-import java.util.Map;
 
 @Dao
 public interface TransakcjaDAO {

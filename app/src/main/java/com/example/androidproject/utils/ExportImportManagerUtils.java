@@ -9,12 +9,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.androidproject.stronaglowna.MainActivity;
-import com.example.androidproject.transakcje.dao.KategoriaDAO;
-import com.example.androidproject.transakcje.dao.TransakcjaCyklicznaDAO;
-import com.example.androidproject.transakcje.dao.TransakcjaDAO;
-import com.example.androidproject.transakcje.encje.KategoriaEntity;
-import com.example.androidproject.transakcje.encje.TransakcjaCyklicznaEntity;
-import com.example.androidproject.transakcje.encje.TransakcjaEntity;
+import com.example.androidproject.baza.dao.KategoriaDAO;
+import com.example.androidproject.baza.dao.TransakcjaCyklicznaDAO;
+import com.example.androidproject.baza.dao.TransakcjaDAO;
+import com.example.androidproject.baza.encje.KategoriaEntity;
+import com.example.androidproject.baza.encje.TransakcjaCyklicznaEntity;
+import com.example.androidproject.baza.encje.TransakcjaEntity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,14 +23,12 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 
-public class ExportImportManager {
+public class ExportImportManagerUtils {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
@@ -157,14 +155,14 @@ public class ExportImportManager {
                 if (jsonObject.has("limit") && !jsonObject.isNull("limit")) {
                     kategoria.limit = jsonObject.getString("limit");
                 } else {
-                    kategoria.limit = "0"; // Domyślna wartość
+                    kategoria.limit = null; // Domyślna wartość
                 }
 
                 // Obsługa null dla aktualnaKwota
                 if (jsonObject.has("aktualnaKwota") && !jsonObject.isNull("aktualnaKwota")) {
                     kategoria.setAktualnaKwota(jsonObject.getDouble("aktualnaKwota"));
                 } else {
-                    kategoria.setAktualnaKwota(0.0); // Domyślna wartość
+                    kategoria.setAktualnaKwota(null); // Domyślna wartość
                 }
 
                 kategoriaDAO.insert(kategoria);

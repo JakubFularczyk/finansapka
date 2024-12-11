@@ -15,9 +15,9 @@ import android.widget.Toast;
 import com.example.androidproject.R;
 import com.example.androidproject.baza.BazaDanych;
 import com.example.androidproject.stronaglowna.MainActivity;
-import com.example.androidproject.transakcje.dao.KategoriaDAO;
-import com.example.androidproject.transakcje.dao.TransakcjaDAO;
-import com.example.androidproject.transakcje.encje.KategoriaEntity;
+import com.example.androidproject.baza.dao.KategoriaDAO;
+import com.example.androidproject.baza.dao.TransakcjaDAO;
+import com.example.androidproject.baza.encje.KategoriaEntity;
 
 import java.util.List;
 
@@ -62,7 +62,15 @@ public class LimityKategoriiAdapter extends BaseAdapter {
         String limit = categoryEntity.getLimit();
         double aktualnaKwota = categoryEntity.getAktualnaKwota();
 
+
+
         categoryNameText.setText(categoryName);
+
+        if ((limit == null || limit.equals("0")) && aktualnaKwota == 0.0) {
+
+            categoryAmountText.setVisibility(View.GONE);
+            categoryLimitText.setVisibility(View.GONE);
+            divider.setVisibility(View.GONE);}
 
         if (limit != null && !limit.isEmpty()) {
             categoryAmountText.setText(String.format("%.2f", Math.abs(aktualnaKwota)));
@@ -158,6 +166,7 @@ public class LimityKategoriiAdapter extends BaseAdapter {
 
     private void removeCategoryLimit(KategoriaEntity category) {
         category.setLimit(null);
+        category.setAktualnaKwota(0.0);
         save(category);
     }
     private void save(KategoriaEntity category) {

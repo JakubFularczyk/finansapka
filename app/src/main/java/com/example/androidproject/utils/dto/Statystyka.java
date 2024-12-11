@@ -1,4 +1,4 @@
-package com.example.androidproject.analiza;
+package com.example.androidproject.utils.dto;
 
 public class Statystyka {
 

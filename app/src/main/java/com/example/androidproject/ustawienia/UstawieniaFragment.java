@@ -1,6 +1,5 @@
 package com.example.androidproject.ustawienia;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -27,12 +26,12 @@ import android.widget.Toast;
 import com.example.androidproject.R;
 import com.example.androidproject.baza.BazaDanych;
 import com.example.androidproject.stronaglowna.MainActivity;
-import com.example.androidproject.transakcje.dao.KategoriaDAO;
-import com.example.androidproject.transakcje.dao.TransakcjaCyklicznaDAO;
-import com.example.androidproject.transakcje.dao.TransakcjaDAO;
-import com.example.androidproject.transakcje.dao.UserDAO;
-import com.example.androidproject.transakcje.encje.UserEntity;
-import com.example.androidproject.utils.ExportImportManager;
+import com.example.androidproject.baza.dao.KategoriaDAO;
+import com.example.androidproject.baza.dao.TransakcjaCyklicznaDAO;
+import com.example.androidproject.baza.dao.TransakcjaDAO;
+import com.example.androidproject.baza.dao.UserDAO;
+import com.example.androidproject.baza.encje.UserEntity;
+import com.example.androidproject.utils.ExportImportManagerUtils;
 
 public class UstawieniaFragment extends Fragment {
 
@@ -55,7 +54,7 @@ public class UstawieniaFragment extends Fragment {
                         Uri uri = result.getData().getData();
                         if (uri != null) {
                             // Wywołanie importu danych z poprawnym przekazaniem URI
-                            ExportImportManager.importDatabaseFromJSON(requireContext(), uri);
+                            ExportImportManagerUtils.importDatabaseFromJSON(requireContext(), uri);
                         } else {
                             Toast.makeText(requireContext(), "Nie wybrano pliku", Toast.LENGTH_SHORT).show();
                         }
@@ -74,7 +73,7 @@ public class UstawieniaFragment extends Fragment {
         Button importButton = view.findViewById(R.id.importBazyDanychButton);
 
         exportButton.setOnClickListener(v -> {
-            ExportImportManager.exportDatabaseToJSON(requireContext());
+            ExportImportManagerUtils.exportDatabaseToJSON(requireContext());
         });
 
         importButton.setOnClickListener(v -> {
@@ -193,8 +192,6 @@ public class UstawieniaFragment extends Fragment {
 
             // Usuń użytkownika
             userDAO.deleteUserById(userId);
-
-
 
             // Przekierowanie do ekranu rejestracji
             NavController navController = Navigation.findNavController(requireView());

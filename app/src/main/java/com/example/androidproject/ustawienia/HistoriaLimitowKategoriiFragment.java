@@ -2,7 +2,6 @@ package com.example.androidproject.ustawienia;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +18,10 @@ import androidx.navigation.Navigation;
 
 import com.example.androidproject.R;
 import com.example.androidproject.adaptery.LimityKategoriiAdapter;
-import com.example.androidproject.baza.BazaDanych;
 import com.example.androidproject.stronaglowna.MainActivity;
-import com.example.androidproject.transakcje.dao.KategoriaDAO;
-import com.example.androidproject.transakcje.encje.KategoriaEntity;
+import com.example.androidproject.baza.encje.KategoriaEntity;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class HistoriaLimitowKategoriiFragment extends Fragment {
 

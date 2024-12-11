@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background_light">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,76 +15,121 @@
             android:id="@+id/headerText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Analiza budżetu"
-            android:textSize="32sp"
+            android:text="@string/analiza_budzetu"
+            android:textSize="42sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:gravity="center"
-            android:layout_marginBottom="16dp" />
+            android:fontFamily="@font/googlesans_bold"
+            android:layout_marginTop="8dp"
+            />
 
-        <!-- Nagłówek wykresu -->
-        <TextView
-            android:id="@+id/expensesHeader"
+        <!-- Kontener na pierwszy wykres -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Wydatki w aktualnym miesiącu"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/frame_with_border"
+            android:padding="16dp">
 
-        <!-- Pierwszy wykres -->
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pieChart1"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Drugi wykres: Przychody -->
-
-
-        <TextView
-            android:id="@+id/incomeHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Przychody w aktualnym miesiącu"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:layout_marginBottom="8dp" />
-
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pieChart2"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Trzeci wykres: Column Chart -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
-
-            <com.example.androidproject.customviews.CustomSwitch
-                android:id="@+id/transactionTypeCustomSwitch"
+            <TextView
+                android:id="@+id/expensesHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textOn="Przychody"
-                android:textOff="Wydatki"
-                android:checked="false"
-                app:switchMinWidth="150dp"
-                android:minHeight="40dp" />
-        </LinearLayout>
+                android:text="Wydatki w aktualnym miesiącu"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="8dp" />
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/barChart"
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart1"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                app:layout_constraintTop_toBottomOf="@id/expensesHeader"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Kontener na drugi wykres -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginBottom="32dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/frame_with_border"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/incomeHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Przychody w aktualnym miesiącu"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="8dp" />
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart2"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                app:layout_constraintTop_toBottomOf="@id/incomeHeader"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Kontener na trzeci wykres -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/frame_with_border"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/transactionTypeHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Typy transakcji"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:id="@+id/switchContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toBottomOf="@id/transactionTypeHeader"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="8dp">
+
+                <com.example.androidproject.customviews.CustomSwitch
+                    android:id="@+id/transactionTypeCustomSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textOn="Przychody"
+                    android:textOff="Wydatki"
+                    android:checked="false"
+                    app:switchMinWidth="150dp"
+                    android:minHeight="40dp" />
+            </LinearLayout>
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barChart"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                app:layout_constraintTop_toBottomOf="@id/switchContainer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </ScrollView>

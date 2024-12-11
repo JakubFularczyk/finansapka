@@ -1,4 +1,4 @@
-package com.example.androidproject.transakcje.encje;
+package com.example.androidproject.baza.encje;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

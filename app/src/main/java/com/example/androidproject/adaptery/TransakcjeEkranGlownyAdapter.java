@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.example.androidproject.R;
-import com.example.androidproject.transakcje.encje.TransakcjaEntity;
+import com.example.androidproject.baza.encje.TransakcjaEntity;
 import java.util.List;
 
 public class TransakcjeEkranGlownyAdapter extends BaseAdapter {

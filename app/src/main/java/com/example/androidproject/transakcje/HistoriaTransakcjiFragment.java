@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +19,9 @@ import com.example.androidproject.R;
 import com.example.androidproject.adaptery.HistoriaTransakcjiAdapter;
 import com.example.androidproject.baza.BazaDanych;
 import com.example.androidproject.stronaglowna.MainActivity;
-import com.example.androidproject.transakcje.dao.TransakcjaDAO;
-import com.example.androidproject.transakcje.encje.TransakcjaEntity;
-import com.example.androidproject.transakcje.service.TransakcjeService;
+import com.example.androidproject.baza.dao.TransakcjaDAO;
+import com.example.androidproject.baza.encje.TransakcjaEntity;
+import com.example.androidproject.service.TransactionsService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,9 +31,11 @@ public class HistoriaTransakcjiFragment extends Fragment {
 
 
     private ListView transactionListView;
+    private TransactionsService transactionsService;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        transactionsService = new TransactionsService((MainActivity) requireActivity());
         return inflater.inflate(R.layout.fragment_historia_transakcji, container, false);
     }
 
@@ -84,9 +85,7 @@ public class HistoriaTransakcjiFragment extends Fragment {
     }
 
     private void logTransactions(List<TransakcjaEntity> transactions) {
-        for (TransakcjaEntity transaction : transactions) {
-            Log.d(getTag(), transaction.getKwota() + " " + transaction.getKategoria() + " " + transaction.getData());
-        }
+        transactionsService.logTransactions(transactions);
     }
 
     private void setupTransactionListView(List<TransakcjaEntity> transactions) {
@@ -102,14 +101,7 @@ public class HistoriaTransakcjiFragment extends Fragment {
     }
 
     private Bundle createTransactionBundle(TransakcjaEntity transaction) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("uid", transaction.getUid());
-        bundle.putString("kwota", transaction.getKwota());
-        bundle.putString("kategoria", transaction.getKategoria());
-        bundle.putSerializable("data", transaction.getData());
-        bundle.putString("opis", transaction.getOpis());
-        //bundle.putBoolean("cykliczna", transakcjeService.isRecurring(transaction));
-        return bundle;
+        return transactionsService.createTransactionBundle(transaction);
     }
 
     private void showFilterMenu(View anchor) {
@@ -147,23 +139,7 @@ public class HistoriaTransakcjiFragment extends Fragment {
     }
 
     private List<TransakcjaEntity> getFilteredTransactions(String filterType) {
-        TransakcjaDAO transakcjaDAO = getTransakcjaDao();
-        switch (filterType) {
-            case "oldest":
-                return transakcjaDAO.getOldest();
-            case "newest":
-                return transakcjaDAO.getNewest();
-            case "income":
-                return transakcjaDAO.getByType(true);
-            case "expenses":
-                return transakcjaDAO.getByType(false);
-            case "highest":
-                return transakcjaDAO.getHighest();
-            case "lowest":
-                return transakcjaDAO.getLowest();
-            default:
-                return transakcjaDAO.getAllSortedByDate();
-        }
+        return transactionsService.getFilteredTransactions(filterType);
     }
 
     private void updateTransactionListView(List<TransakcjaEntity> transactions) {

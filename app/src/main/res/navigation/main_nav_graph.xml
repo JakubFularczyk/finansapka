@@ -129,7 +129,7 @@
     </fragment>
     <fragment
         android:id="@+id/rejestracjaFragment"
-        android:name="com.example.androidproject.RejestracjaFragment"
+        android:name="com.example.androidproject.autoryzacja.RejestracjaFragment"
         android:label="RejestracjaFragment" >
         <action
             android:id="@+id/action_rejestracjaFragment_to_mainFragment"
@@ -137,7 +137,7 @@
     </fragment>
     <fragment
         android:id="@+id/logowanieFragment"
-        android:name="com.example.androidproject.LogowanieFragment"
+        android:name="com.example.androidproject.autoryzacja.LogowanieFragment"
         android:label="LogowanieFragment" >
         <action
             android:id="@+id/action_logowanieFragment_to_mainFragment"
@@ -148,7 +148,7 @@
     </fragment>
     <fragment
         android:id="@+id/zapomnianeHasloFragment"
-        android:name="com.example.androidproject.ZapomnianeHasloFragment"
+        android:name="com.example.androidproject.autoryzacja.ZapomnianeHasloFragment"
         android:label="ZapomnianeHasloFragment" >
         <action
             android:id="@+id/action_zapomnianeHasloFragment_to_rejestracjaFragment"
